@@ -2,6 +2,20 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-   
-</div>
+@using (Html.BeginForm("IndexNext", "Home", FormMethod.Post, new { id = "frmwidth" }))
+{
+    <input id="clientScreenWidth" name="clientScreenWidth" type="hidden" />
+    <input id="clientScreenHeight" name="clientScreenHeight" type="hidden" />
+}
+@section scripts {
+<script>
+    $(document).ready(function(){ 
+        
+
+        $("#clientScreenWidth").val($(window).width());
+        $("#clientScreenHeight").val($(window).height()); 
+        $("#frmwidth").submit();
+        
+    });
+</script>
+}

@@ -15,7 +15,14 @@ namespace MyRealWorld.Controllers
 
         public IActionResult Index()
         {
-            return View();
+           
+            return View(null );
+        }
+        [HttpPost]
+        public IActionResult IndexNext(string clientScreenWidth, string clientScreenHeight)
+        {
+            MainVM vm = new MainVM(Convert.ToInt32(clientScreenWidth), Convert.ToInt32(clientScreenHeight));
+            return View("~/Views/Home/IndexNextView.cshtml",vm);
         }
 
         public IActionResult Privacy()
@@ -28,5 +35,13 @@ namespace MyRealWorld.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        [HttpPost]
+        public async Task<JsonResult> UpdateLine(string sline)
+        {
+            VertLineVM l = new VertLineVM();
+            await l.UpdatLineData(sline);
+            return Json(l.LineData);
+        }
+        
     }
 }

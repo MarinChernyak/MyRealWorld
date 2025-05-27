@@ -1,0 +1,27 @@
+﻿@model MyRealWorld.Models.VertLineVM
+
+<div class="vcontainer" id="@Model.Id">@Model.LineData</div>
+
+
+<script>
+    setInterval(function(){
+    var sline = $("#"+"@Model.Id").html();
+    if(sline.length>42)
+         console.log("Length Exided!");
+      $.ajax({
+      url: '@Url.Action("UpdateLine", "Home")',
+      method: "POST", 
+      data: { sline:sline}, 
+      dataType: "json", 
+      success: function(value) {
+          $("#"+"@Model.Id").empty();
+        $("#"+"@Model.Id").html(value);
+      },
+      error: function(error) {
+        // Handle errors
+        console.log("AJAX Error!");
+      }
+    });
+
+    }, @Model.Timeout);
+</script>
