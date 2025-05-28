@@ -42,6 +42,10 @@ namespace MyRealWorld.Controllers
             await l.UpdatLineData(sline);
             return Json(l.LineData);
         }
-        
+        public IActionResult Programming()
+        {
+            ProgrammingVM model = new ProgrammingVM();
+            return View("~/Views/Programming/ProgrammingView.cshtml", model);
+        }
     }
 }
