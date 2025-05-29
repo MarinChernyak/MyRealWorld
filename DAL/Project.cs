@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using Mono.TextTemplating;
 using System.ComponentModel.DataAnnotations;
 
-namespace MRW_DAL
+namespace MyRealWorld.DAL
 {
     [PrimaryKey(nameof(Id))]
-    internal class Projects
+    public class Project
     {
         public int Id { get; set; }
         [Required]
@@ -14,7 +15,8 @@ namespace MRW_DAL
         public string Description { get; set; }
         [Required]
         public string ProjectVersion { get; set; }
-        [Required]
-        public string Picture { get; set; }
+
+        public ICollection<ProjectsKW> projkw { get; }
+        public ICollection<Project_Pictures> projpics { get; }
     }
 }

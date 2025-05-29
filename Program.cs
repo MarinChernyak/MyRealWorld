@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using MRW_DAL;
+using MyRealWorld.DAL;
+
 
 var builder = WebApplication.CreateBuilder(args);
 

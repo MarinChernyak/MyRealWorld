@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyRealWorld.DAL;
 
@@ -10,9 +11,11 @@ using MyRealWorld.DAL;
 namespace MyRealWorld.Migrations
 {
     [DbContext(typeof(MRWContext))]
-    partial class MRWContextModelSnapshot : ModelSnapshot
+    [Migration("20250528180420_ChangedNames_projects_pictures")]
+    partial class ChangedNames_projects_pictures
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,7 +63,7 @@ namespace MyRealWorld.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pictures");
+                    b.ToTable("Picture");
                 });
 
             modelBuilder.Entity("MyRealWorld.DAL.Project", b =>

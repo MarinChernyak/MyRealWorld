@@ -6,20 +6,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MRW_DAL
+namespace MyRealWorld.DAL
 {
     internal  class MRWContext : DbContext
     {
-        private string connectionString;
-        public DbSet<Projects> Projects { get; set; }
+        private string connectionString=string.Empty;
+        public DbSet<Project> Projects { get; set; }
         public DbSet<KeyWords> KeyWords { get; set; }
-        public DbSet<ProjectsKW> ProjectsKW { get; set; }   
+        public DbSet<ProjectsKW> ProjectsKW { get; set; }
+        public DbSet<Picture> Pictures { get; set; }
+        public DbSet<Project_Pictures> Project_Pictures { get; set; }
+        public MRWContext()
+        {
+        }
         public MRWContext(DbContextOptions<MRWContext> options) : base(options) {
-            var sqlServerOptionsExtension =
-                       options.FindExtension<SqlServerOptionsExtension>();
-            if (sqlServerOptionsExtension != null)
+            if (options != null)
             {
-                connectionString = sqlServerOptionsExtension.ConnectionString;
+                var sqlServerOptionsExtension =
+                           options.FindExtension<SqlServerOptionsExtension>();
+                if (sqlServerOptionsExtension != null)
+                {
+                    connectionString = sqlServerOptionsExtension.ConnectionString;
+                }
             }
         }
 

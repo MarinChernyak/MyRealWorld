@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Mono.TextTemplating;
 using System;
 using System.Collections.Generic;
@@ -7,17 +8,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MRW_DAL
+namespace MyRealWorld.DAL
 {
 
     [PrimaryKey(nameof(Id))]
-    internal   class KeyWords
+    public   class KeyWords
     {
          int Id { get; set; }
         [Required]
         public string KWS { get; set; }
         [Required]
-        public string Default { get; set; }
+        public string DefaultEn { get; set; }
 
+        public ICollection<ProjectsKW> projkw { get; }
     }
 }

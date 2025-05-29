@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyRealWorld.DAL;
 
@@ -10,9 +11,11 @@ using MyRealWorld.DAL;
 namespace MyRealWorld.Migrations
 {
     [DbContext(typeof(MRWContext))]
-    partial class MRWContextModelSnapshot : ModelSnapshot
+    [Migration("20250528171439_FK_projetcs")]
+    partial class FK_projetcs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,7 +32,7 @@ namespace MyRealWorld.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("DefaultEn")
+                    b.Property<string>("Default")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -42,7 +45,7 @@ namespace MyRealWorld.Migrations
                     b.ToTable("KeyWords");
                 });
 
-            modelBuilder.Entity("MyRealWorld.DAL.Picture", b =>
+            modelBuilder.Entity("MyRealWorld.DAL.Pictures", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -54,7 +57,7 @@ namespace MyRealWorld.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UrlImg")
+                    b.Property<string>("PathImg")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -63,7 +66,30 @@ namespace MyRealWorld.Migrations
                     b.ToTable("Pictures");
                 });
 
-            modelBuilder.Entity("MyRealWorld.DAL.Project", b =>
+            modelBuilder.Entity("MyRealWorld.DAL.Project_Pictures", b =>
+                {
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PictureID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("picturesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("projectsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProjectId", "PictureID");
+
+                    b.HasIndex("picturesId");
+
+                    b.HasIndex("projectsId");
+
+                    b.ToTable("Project_Pictures");
+                });
+
+            modelBuilder.Entity("MyRealWorld.DAL.Projects", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -88,21 +114,6 @@ namespace MyRealWorld.Migrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("MyRealWorld.DAL.Project_Pictures", b =>
-                {
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PictureID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProjectId", "PictureID");
-
-                    b.HasIndex("PictureID");
-
-                    b.ToTable("Project_Pictures");
-                });
-
             modelBuilder.Entity("MyRealWorld.DAL.ProjectsKW", b =>
                 {
                     b.Property<int>("ProjectId")
@@ -111,44 +122,57 @@ namespace MyRealWorld.Migrations
                     b.Property<int>("KWId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("KeyWordsId")
+                    b.Property<int>("keyWordsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("projectsId")
                         .HasColumnType("int");
 
                     b.HasKey("ProjectId", "KWId");
 
-                    b.HasIndex("KeyWordsId");
+                    b.HasIndex("keyWordsId");
+
+                    b.HasIndex("projectsId");
 
                     b.ToTable("ProjectsKW");
                 });
 
             modelBuilder.Entity("MyRealWorld.DAL.Project_Pictures", b =>
                 {
-                    b.HasOne("MyRealWorld.DAL.Picture", "pictures")
+                    b.HasOne("MyRealWorld.DAL.Pictures", "pictures")
                         .WithMany("projpics")
-                        .HasForeignKey("PictureID")
+                        .HasForeignKey("picturesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MyRealWorld.DAL.Project", null)
+                    b.HasOne("MyRealWorld.DAL.Projects", "projects")
                         .WithMany("projpics")
-                        .HasForeignKey("ProjectId")
+                        .HasForeignKey("projectsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("pictures");
+
+                    b.Navigation("projects");
                 });
 
             modelBuilder.Entity("MyRealWorld.DAL.ProjectsKW", b =>
                 {
-                    b.HasOne("MyRealWorld.DAL.KeyWords", null)
+                    b.HasOne("MyRealWorld.DAL.KeyWords", "keyWords")
                         .WithMany("projkw")
-                        .HasForeignKey("KeyWordsId");
-
-                    b.HasOne("MyRealWorld.DAL.Project", null)
-                        .WithMany("projkw")
-                        .HasForeignKey("ProjectId")
+                        .HasForeignKey("keyWordsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("MyRealWorld.DAL.Projects", "projects")
+                        .WithMany("projkw")
+                        .HasForeignKey("projectsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("keyWords");
+
+                    b.Navigation("projects");
                 });
 
             modelBuilder.Entity("MyRealWorld.DAL.KeyWords", b =>
@@ -156,12 +180,12 @@ namespace MyRealWorld.Migrations
                     b.Navigation("projkw");
                 });
 
-            modelBuilder.Entity("MyRealWorld.DAL.Picture", b =>
+            modelBuilder.Entity("MyRealWorld.DAL.Pictures", b =>
                 {
                     b.Navigation("projpics");
                 });
 
-            modelBuilder.Entity("MyRealWorld.DAL.Project", b =>
+            modelBuilder.Entity("MyRealWorld.DAL.Projects", b =>
                 {
                     b.Navigation("projkw");
 
