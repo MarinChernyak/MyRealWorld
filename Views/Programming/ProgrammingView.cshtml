@@ -1,10 +1,28 @@
-﻿
+﻿@using MyRealWorld.ViewModels.Programming
+
 @{
     ViewData["Title"] = "Programming";
-
-    Layout = "_LayoutProgramming";
+    Layout = "_LayoutProgramming";    
 }
-@model MyRealWorld.Models.ProgrammingVM
+<link rel="stylesheet" href="~/css/ProjectView.css" />
 
-<h1>Programming View</h1>
+@model ProgrammingVM
 
+
+<div class="container Main">
+    <h1>Projects List</h1>
+
+
+    @foreach (var proj in Model.ProjectsCollection)
+    {
+        await Html.RenderPartialAsync("~/Views/Programming/_ProjectView.cshtml", proj);        
+    }
+    <div class="row">
+        <div class="col-lg-10"></div>
+        <div class="col-lg-2" style="text-align:right;">
+            <button class="btn btn-light" id="btnAddProj">Add Project</button>
+        </div>
+    </div>
+    
+
+</div>

@@ -1,0 +1,23 @@
+﻿
+@using MyRealWorld.ViewModels.Programming
+@model ProjectVM
+<link rel="stylesheet" href="~/css/ProjectView.css" />
+
+<div class="container ProjectView">
+    <div class="row">
+        <div class="col-lg-3">
+            <img src='~/images/ProjectsImages/@Model.GetImgSrc()' width="200" height="200" />
+            @* <img src='~/images/ProjectsImages/avatar.jpg' width="200" height="200" /> *@
+        </div>
+        <div class="col-lg-9">
+            <h3>
+                @Model.ProjectName
+            </h3>
+            <p>
+                @Model.GetDescription()
+            </p>
+        </div>
+
+    </div>
+
+</div>

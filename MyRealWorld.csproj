@@ -2,12 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Geo\EventPlaceModel.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\css\myworld.css" />
+    <None Include="wwwroot\css\ProjectView.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,10 +29,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="css\" />
-    <Folder Include="Helpers\" />
     <Folder Include="BL\" />
+    <Folder Include="css\" />
     <Folder Include="Views\Admin\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MRW_DAL\MRW_DAL.csproj" />
   </ItemGroup>
 
 </Project>

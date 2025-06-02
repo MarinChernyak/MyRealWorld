@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MyRealWorld.Models;
+using MyRealWorld.ViewModels;
+using MyRealWorld.ViewModels.Programming;
 
 namespace MyRealWorld.Controllers
 {
