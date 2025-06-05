@@ -2,14 +2,14 @@
 
 @{
     ViewData["Title"] = "Add Project";
-    Layout = "_LayoutMain2";
+    Layout = "~/Views/Shared/_LayoutMain2.cshtml"; 
 }
 <link rel="stylesheet" href="~/css/ProjectView.css" />
 @model AddProjectVM
 
 <div class="container">
     <h1>Add a New Project</h1>
-    <form asp-controller="Projects" asp-action="SaveProject" method="post" class="mt-3" enctype="multipart/form-data">
+   <form asp-controller="Projects" asp-action="SaveProject" method="post" class="mt-3" enctype="multipart/form-data">
         
         <input type="hidden" value="@Model.Id" name="Id" />
         <fieldset>
@@ -17,7 +17,7 @@
             <label for="ProjectName" class="form-label labels_of_controls">Project Name</label>
             <input asp-for="ProjectName" type="text" class="form-control midium_txt" id="txtProjName" placeholder="Project Name is required">
         </div>
-        <div class="mb-3">
+         <div class="mb-3">
             <label for="Description" class="form-label labels_of_controls">Description</label>
             <textarea asp-for="Description" class="form-control midium_txt" id="txtDescription" rows="5" placeholder="Provide a brief description of the project"></textarea>
         </div>
@@ -26,21 +26,33 @@
             <input asp-for="YearPublished" type="text" class="form-control midium_txt" id="txtYear" placeholder="Year is required"
                     onkeydown="return (!(event.keyCode>=65) && event.keyCode!=32);">
         </div>
+            <div class="mb-3">
+                <label for="ProjectVersion" class="form-label labels_of_controls">Last version</label>
+                <input asp-for="ProjectVersion" type="text" class="form-control midium_txt" id="txtVer" placeholder="Last version">
+            </div>
         <div class="mb-3">
             <label for="ProjectUrl" class="form-label labels_of_controls">Project Url</label>
-            <input asp-for="ProjectUrl" type="text" class="form-control midium_txt" id="txtProjUrl" placeholder="Url is required">
+            <input asp-for="ProjectUrl" type="text" class="form-control midium_txt" id="txtProjUrl" placeholder="Url is required for web projects">
         </div>
+            <div class="mb-3">
+                <label for="CodeUrl" class="form-label labels_of_controls">Code Url</label>
+                <input asp-for="CodeUrl" type="text" class="form-control midium_txt" id="txtCodeUrl" placeholder="Code Url is required">
+            </div>
+            <div class="mb-3">
+                <label for="KeyWords" class="form-label labels_of_controls">Keywords</label>
+                <input asp-for="KeyWords" type="text" class="form-control midium_txt" id="txtKeyWords" placeholder="Enter some keywords...(optional)">
+            </div>
 
         <div class="some_area">
             <div class="mb-3">
                 <input asp-for="Photo" type="file" class="form-control custom-file-input midium_txt_in_area" id="ProjectImage" accept="image/*" style="width:450px;" >
                     <input asp-for="ImageUrl" type="hidden" id="hdProjectImage">
             </div>
-            <div class="mb-3">
+             <div class="mb-3">
                 <label for="Comments" class="form-label labels_of_controls">Comments for the image</label>
                 <textarea asp-for="Comments" class="form-control midium_txt_in_area" id="txtDescription" rows="3" placeholder="Leave some comments for the image"></textarea>
             </div>
-                <input type="hidden" value="@Model.Pictures[0].Id" name="IdPic" />
+            
         </div>
             
         <button type="submit" class="btn btn-light">Save</button>
@@ -49,15 +61,3 @@
     </form> 
 </div>
 
-<script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
-<script>
-    $(document).ready(function () {
-        console.log(@Model.Id);
-
-        // $('.custom-file-input').on('change', function () {
-        //     var filename = $(this).val().split("\\").pop();
-        //     $(this).next('.custom-file-label').html(filename);
-        //     $("#hdProjectImage").val(filename);
-        // });
-    });
-</script>

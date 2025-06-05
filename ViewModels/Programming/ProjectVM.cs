@@ -10,11 +10,14 @@ namespace MyRealWorld.ViewModels.Programming
         public string ProjectName { get; set; }
         public string Description { get; set; }
         public string ProjectUrl { get; set; }
+        public string CodeUrl { get; set; } = string.Empty;
         public int YearPublished { get; set; } = DateTime.Now.Year;
+        public string KeyWords { get; set; } = string.Empty;
+        public string ProjectVersion { get; set; } = string.Empty;
         public List<Picture> Pictures { get; set; }=new List<Picture>();
-        public List<KeyWord> KeyWords { get; set; }= new List<KeyWord>();
+       
 
-        protected const int DECRIPTION_LENGTH_LIMIT = 200;
+        protected const int DECRIPTION_LENGTH_LIMIT = 400;
         protected int Currect_index_img = 0;
         public ProjectVM(int id)
         {
@@ -39,7 +42,9 @@ namespace MyRealWorld.ViewModels.Programming
                         Description = proj[0].Description;
                         ProjectUrl = proj[0].UrlProject;
                         YearPublished = proj[0].YearPublishing;
-
+                        KeyWords = proj[0].KeyWords;
+                        CodeUrl = proj[0].UrlCode;
+                        ProjectVersion = proj[0].ProjectVersion;
                     }
                     
                 }
@@ -59,10 +64,7 @@ namespace MyRealWorld.ViewModels.Programming
                     var proj_pics = context.Project_Picture.Where(x => x.ProjectId == Id).Select(z=>z.PictureID).ToList();
                     Pictures = context.Pictures.Where(x => proj_pics.Any(pp => x.Id == pp)).ToList();
 
-                    var proj_kw = context.ProjectsKW.Where(x => x.ProjectId == Id).Select(x=>x.KWId).ToList();
-                    KeyWords = context.KeyWords.Where(kw => proj_kw.Any(pkw => pkw == kw.Id)).ToList();
-
-                }
+               }
                 catch(Exception e)
                 {
                     var s = e.Message;
@@ -87,14 +89,13 @@ namespace MyRealWorld.ViewModels.Programming
             }
             return sdescript;
         }
-        public string GetKWList()
+        public string getProjectUrl()
         {
-            string s = string.Empty;
-            if (KeyWords.Count > 0)
-            {
-                s = string.Join(", ", KeyWords.Select(kw => kw.DefaultEn));
-            }
-            return s;
+            return $"https://{ProjectUrl}";
+        }
+        public string getCodeUrl()
+        {
+            return $"https://{CodeUrl}";
         }
     }
 }

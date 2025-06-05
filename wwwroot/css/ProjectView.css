@@ -79,6 +79,19 @@ button{
     height:15px;
     margin-right:30px;
 }
+.descriptio_part{
+    height:80%;
+    display:block;
+}
+.key_words_part {
+    height: 15%;
+    display: block;
+    background-color: dimgray;
+    color: antiquewhite;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    font-family: 'Segoe UI';
+}
 /*88888888  Modal   88888888*/
 .modal {
     display: none; /* Hidden by default */

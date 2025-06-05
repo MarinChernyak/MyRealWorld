@@ -9,6 +9,7 @@ namespace MyRealWorld.Controllers.Programming
         {
             AddProjectVM model = new AddProjectVM();
             return View("~/Views/Programming/AddEditProject.cshtml", model);
+            
         }
         public async Task<IActionResult> SaveProject(AddProjectVM model)
         {
@@ -30,6 +31,20 @@ namespace MyRealWorld.Controllers.Programming
         {
             AddProjectVM model = new AddProjectVM(projId);
             return View("~/Views/Programming/AddEditProject.cshtml", model);
+        }
+        public IActionResult DeleteProject(int projId)
+        {
+            ProgrammingVM vm = new ProgrammingVM();
+            var result = vm.DeleteProject(projId);
+            if (result != ProgrammingVM.ERROR_CODES.NO_ERROR)
+            {
+                ModelState.AddModelError("Error", $"Error deleting project with ID {projId}. Error code: {result}");
+            }
+            else
+            {
+                ModelState.AddModelError("Success", $"Project with ID {projId} deleted successfully.");
+            }
+            return RedirectToAction("Programming", "Home");
         }
     }
 }

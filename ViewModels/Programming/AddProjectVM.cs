@@ -21,6 +21,10 @@ namespace MyRealWorld.ViewModels.Programming
             Comments = string.Empty;
             ImageUrl = string.Empty;
             ProjectUrl = string.Empty;
+            KeyWords = string.Empty;
+            YearPublished = DateTime.Now.Year;
+            CodeUrl = string.Empty;
+            ProjectVersion = string.Empty;
             FullPath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), Constants.Paths.ImageRepositoryRoot));
         }
         public AddProjectVM(int projId)
@@ -62,12 +66,15 @@ namespace MyRealWorld.ViewModels.Programming
                         {
                             ProjectName = ProjectName,
                             Description = Description,
-                            UrlProject = ProjectUrl,
-                            YearPublishing = YearPublished
+                            UrlProject = ProjectUrl??"",
+                            YearPublishing = YearPublished,
+                            KeyWords = KeyWords,
+                            UrlCode = CodeUrl,
+                            ProjectVersion = ProjectVersion
 
                         };
                         context.Projects.Add(project);
-                        //await context.SaveChangesAsync();
+                        await context.SaveChangesAsync();
 
                         Project_Picture projectPicture = new Project_Picture
                         {
@@ -120,9 +127,11 @@ namespace MyRealWorld.ViewModels.Programming
                     {
                         project.ProjectName = ProjectName;
                         project.Description = Description;
-                        project.UrlProject = ProjectUrl;
+                        project.UrlProject = ProjectUrl??"";
                         project.YearPublishing = YearPublished;
-
+                        project.KeyWords = KeyWords;
+                        project.UrlCode = CodeUrl;
+                        project.ProjectVersion = ProjectVersion;
                         context.Projects.Update(project);
                     }
                     else

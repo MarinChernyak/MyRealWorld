@@ -11,21 +11,35 @@
                 <img src='~/images/ProjectsImages/@Model.GetImgSrc()' width="200" height="200" />
             </div>
             <div class="row">
-                <div class="col-md-5 img_label">year: @Model.YearPublished</div><div class="col-md-6 img_label">last version: 1.0</div>
+                <div class="col-md-5 img_label">year: @Model.YearPublished</div><div class="col-md-6 img_label">last version: @Model.ProjectVersion</div>
             </div>
         </div>
 
         <div class="main_part_room">
+            <div class="descriptio_part">
             <h3>
                 @Model.ProjectName
             </h3>
             <p>
                 @Model.GetDescription()
             </p>
+            </div>
+            <div class="key_words_part">
+                <div class="row">
+                    <div class="col-2"style="color:moccasin;"><b>KeyWords: </b></div>
+                    <div class="col-10"> @Model.KeyWords</div>
+                </div>
+            </div>
         </div>
         <div class="buttons_area" title="take a look...">
+            @if (!string.IsNullOrEmpty(Model.ProjectUrl))
+            {
+                <div class="icon_menu first">
+                    <a href="@Model.getProjectUrl()" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                </div>
+            }
             <div class="icon_menu first">
-                <a href="@Model.ProjectUrl" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                <a href="@Model.getCodeUrl()" target="_blank"><i class="fa-solid fa-code"></i></a>
             </div>
             <div class="icon_menu" title="Edit...">
                 @Html.ActionLink(" ", "EditProject", "Projects", new { projId = Model.Id }, new { @class = "fa-solid fa-pen" })               
@@ -34,8 +48,8 @@
                 <span data-target="#myModal" data-toggle="modal" onclick="ShowDialog();"><i class=" fa-solid fa-circle-info"></i></span>
                 
             </div>
-            <div class="icon_menu" title="delete..." ">
-                <a href="#"><i class="fa-solid fa-trash" style="color:darkred;"></i></a>
+            <div class="icon_menu" title="delete...">                
+                @Html.ActionLink(" ", "DeleteProject", "Projects", new { projId = Model.Id }, new {onclick="return confirm('Are you sure?')", @class = "fa-solid fa-trash", @style="color:darkred;" })
             </div>
             
         </div>
@@ -66,7 +80,7 @@
           var modal = document.getElementById("myModal");
           modal.style.display = "block";
     }
-        function closeModal() {
+    function closeModal() {
       var modal = document.getElementById("myModal");
       modal.style.display = "none";
     }
