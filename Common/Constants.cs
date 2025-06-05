@@ -59,6 +59,7 @@ namespace MyRealWorld.Common
         public class Paths
         {
             public static string ImageRepository { get { return "~/images/ProjectsImages";  } }
+            public static string ImageRepositoryRoot { get { return "wwwroot\\images\\ProjectsImages"; } }
         }
         public class DataTypes
         {

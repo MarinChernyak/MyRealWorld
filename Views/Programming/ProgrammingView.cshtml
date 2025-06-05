@@ -2,10 +2,11 @@
 
 @{
     ViewData["Title"] = "Programming";
-    Layout = "_LayoutProgramming";    
+    Layout = "_LayoutMain2";    
 }
-<link rel="stylesheet" href="~/css/ProjectView.css" />
 
+ 
+<link rel="stylesheet" href="~/css/ProjectView.css" />
 @model ProgrammingVM
 
 
@@ -20,9 +21,49 @@
     <div class="row">
         <div class="col-lg-10"></div>
         <div class="col-lg-2" style="text-align:right;">
-            <button class="btn btn-light" id="btnAddProj">Add Project</button>
+
+            <button type="submit" class="btn btn-light" id="btnAddProj" 
+            onclick="@("window.location.href='" + @Url.Action("AddProject", "Projects") + "'");">
+                    Add Project
+                </button>
+            
         </div>
     </div>
     
 
 </div>
+@section scripts {
+
+}
+@* properties in button for the modal:  data-toggle="modal" data-target="#myModal"*@
+
+@* <!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" id="hHeader">Add New Project</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                @using (Html.BeginForm("SaveProject", "LogIn", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProjectName, new { @class = "control-label" }))
+                    </div>
+
+                }
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div> *@

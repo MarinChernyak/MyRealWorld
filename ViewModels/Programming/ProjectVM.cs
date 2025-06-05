@@ -1,17 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MRW_DAL.MyWEntities;
+﻿using MRW_DAL.MyWEntities;
 using MyRealWorld.Common;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
+using System.ComponentModel;
 
 namespace MyRealWorld.ViewModels.Programming
 {
     public class ProjectVM
     {
-        public int Id { get; protected set; }
+        public int Id { get; set; }
         public string ProjectName { get; set; }
         public string Description { get; set; }
-        public List<KeyValue> Pictures { get; set; }=new List<KeyValue>();
+        public string ProjectUrl { get; set; }
+        public int YearPublished { get; set; } = DateTime.Now.Year;
+        public List<Picture> Pictures { get; set; }=new List<Picture>();
         public List<KeyWord> KeyWords { get; set; }= new List<KeyWord>();
 
         protected const int DECRIPTION_LENGTH_LIMIT = 200;
@@ -19,7 +19,35 @@ namespace MyRealWorld.ViewModels.Programming
         public ProjectVM(int id)
         {
             Id = id;
+            GetProject();
             GetCollections();
+        }
+        public ProjectVM()
+        {
+
+        }
+        protected void GetProject()
+        {
+            using (var context = new MRWContext())
+            {
+                try
+                {
+                    List<Project> proj = context.Projects.Where(x => x.Id == Id).ToList();
+                    if(proj!=null && proj.Count>0)
+                    {
+                        ProjectName = proj[0].ProjectName;
+                        Description = proj[0].Description;
+                        ProjectUrl = proj[0].UrlProject;
+                        YearPublished = proj[0].YearPublishing;
+
+                    }
+                    
+                }
+                catch (Exception e)
+                {
+                    var s = e.Message;
+                }
+            }
         }
         protected void GetCollections()
         {
@@ -29,15 +57,11 @@ namespace MyRealWorld.ViewModels.Programming
                 try
                 {
                     var proj_pics = context.Project_Picture.Where(x => x.ProjectId == Id).Select(z=>z.PictureID).ToList();
-                    var pictures = context.Pictures.Where(x => proj_pics.Any(pp => x.Id == pp)).ToList();
+                    Pictures = context.Pictures.Where(x => proj_pics.Any(pp => x.Id == pp)).ToList();
 
                     var proj_kw = context.ProjectsKW.Where(x => x.ProjectId == Id).Select(x=>x.KWId).ToList();
                     KeyWords = context.KeyWords.Where(kw => proj_kw.Any(pkw => pkw == kw.Id)).ToList();
 
-                    foreach (var p in pictures)
-                    {
-                        Pictures.Add(new KeyValue(p.Id, p.UrlImg));
-                    }
                 }
                 catch(Exception e)
                 {
@@ -50,7 +74,7 @@ namespace MyRealWorld.ViewModels.Programming
             string src = string.Empty;
             if (Pictures.Count > 0 && Currect_index_img< Pictures.Count)
             {
-                src = Pictures[Currect_index_img].Value.ToString();
+                src = Pictures[Currect_index_img].UrlImg;
             }
             return src;
         }
@@ -62,6 +86,15 @@ namespace MyRealWorld.ViewModels.Programming
                 sdescript = $"{sdescript.Substring(0, DECRIPTION_LENGTH_LIMIT)}...";
             }
             return sdescript;
+        }
+        public string GetKWList()
+        {
+            string s = string.Empty;
+            if (KeyWords.Count > 0)
+            {
+                s = string.Join(", ", KeyWords.Select(kw => kw.DefaultEn));
+            }
+            return s;
         }
     }
 }

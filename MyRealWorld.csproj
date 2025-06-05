@@ -7,7 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ViewModels\PictureViewer\**" />
+    <Content Remove="ViewModels\PictureViewer\**" />
+    <EmbeddedResource Remove="ViewModels\PictureViewer\**" />
+    <None Remove="ViewModels\PictureViewer\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Models\Geo\EventPlaceModel.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\DataWorking\UploadPicture.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FontAwesome" Version="4.7.0" />
     <PackageReference Include="jQuery" Version="3.7.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.5" />
@@ -29,9 +41,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BL\" />
+    <Folder Include="BL\DataWorking\" />
     <Folder Include="css\" />
     <Folder Include="Views\Admin\" />
+    <Folder Include="Views\DataWorking\" />
+    <Folder Include="wwwroot\images\ProjectsImages\" />
   </ItemGroup>
 
   <ItemGroup>

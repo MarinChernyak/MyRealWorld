@@ -22,13 +22,8 @@ namespace MyRealWorld.ViewModels.Programming
                 var projects = context.Projects.ToList();
                 foreach (var project in projects)
                 {
-                    ProjectsCollection.Add(new ProjectVM(project.Id)
-                    {
-                        Description = project.Description,
-                        ProjectName = project.ProjectName
-                    });
-                }
-                
+                    ProjectsCollection.Add(new ProjectVM(project.Id));                    
+                }                
             }
         }
         public async Task AddProject(Project project)

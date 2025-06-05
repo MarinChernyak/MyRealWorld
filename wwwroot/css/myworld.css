@@ -1,6 +1,10 @@
 ﻿body {
     background-color: #0a1a03;
 }
+.Main {
+    min-height: 90%;
+    height: 90%;
+}
 .vcontainer {
     width: 22px;
     height: 100%;

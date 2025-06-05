@@ -5,11 +5,17 @@
 
 <div class="container ProjectView">
     <div class="row">
-        <div class="col-lg-3">
-            <img src='~/images/ProjectsImages/@Model.GetImgSrc()' width="200" height="200" />
-            @* <img src='~/images/ProjectsImages/avatar.jpg' width="200" height="200" /> *@
+       
+        <div class="img_room">
+            <div class="row">
+                <img src='~/images/ProjectsImages/@Model.GetImgSrc()' width="200" height="200" />
+            </div>
+            <div class="row">
+                <div class="col-md-5 img_label">year: @Model.YearPublished</div><div class="col-md-6 img_label">last version: 1.0</div>
+            </div>
         </div>
-        <div class="col-lg-9">
+
+        <div class="main_part_room">
             <h3>
                 @Model.ProjectName
             </h3>
@@ -17,7 +23,65 @@
                 @Model.GetDescription()
             </p>
         </div>
+        <div class="buttons_area" title="take a look...">
+            <div class="icon_menu first">
+                <a href="@Model.ProjectUrl" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            </div>
+            <div class="icon_menu" title="Edit...">
+                @Html.ActionLink(" ", "EditProject", "Projects", new { projId = Model.Id }, new { @class = "fa-solid fa-pen" })               
+            </div>
+            <div class="icon_menu" title="details...">
+                <span data-target="#myModal" data-toggle="modal" onclick="ShowDialog();"><i class=" fa-solid fa-circle-info"></i></span>
+                
+            </div>
+            <div class="icon_menu" title="delete..." ">
+                <a href="#"><i class="fa-solid fa-trash" style="color:darkred;"></i></a>
+            </div>
+            
+        </div>
 
     </div>
 
 </div>
+
+
+
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <div class="row">
+            <div class="col-md-11  modal-header"> Details of the Project</div>
+            <div class="col-md-1 close">&times;</div>
+        </div>
+
+        <p>@Model.Description</p>
+    </div>
+
+</div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+        });
+    function ShowDialog(){
+          var modal = document.getElementById("myModal");
+          modal.style.display = "block";
+    }
+        function closeModal() {
+      var modal = document.getElementById("myModal");
+      modal.style.display = "none";
+    }
+
+    // Close the modal if the user clicks outside of it
+    window.onclick = function(event) {
+      var modal = document.getElementById("myModal");
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    // Attach close modal event to the close button
+    document.querySelector('.close').onclick = closeModal
+        
+        
+
+    </script>
