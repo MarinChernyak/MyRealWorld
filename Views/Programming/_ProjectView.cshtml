@@ -31,17 +31,17 @@
                 </div>
             </div>
         </div>
-        <div class="buttons_area" title="take a look...">
+        <div class="buttons_area" >
             @if (!string.IsNullOrEmpty(Model.ProjectUrl))
             {
-                <div class="icon_menu first">
+                <div class="icon_menu first" title="take a look...">
                     <a href="@Model.getProjectUrl()" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                 </div>
             }
-            <div class="icon_menu first">
+            <div class="icon_menu first" title="see code...">
                 <a href="@Model.getCodeUrl()" target="_blank"><i class="fa-solid fa-code"></i></a>
             </div>
-            <div class="icon_menu" title="Edit...">
+            <div class="icon_menu" title="edit...">
                 @Html.ActionLink(" ", "EditProject", "Projects", new { projId = Model.Id }, new { @class = "fa-solid fa-pen" })               
             </div>
             <div class="icon_menu" title="details...">

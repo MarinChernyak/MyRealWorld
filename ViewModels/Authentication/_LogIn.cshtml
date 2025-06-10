@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Nostralogia3.Models.Authentication.LogInModel
+@using (Html.BeginForm("LogIn", "LogIn", FormMethod.Post))
+{
+    <section id="LogIn" class="bg-dark">
+        <div class="container">
+            <div class="ErrorMessage text-danger">@Model.ErrorMessage </div>
+            <fieldset>
+                <legend>Log in Form</legend>
+
+                <div class="col-md-3 form-group">
+
+                    @Html.LabelFor(x => x.UserName)
+                    @Html.EditorFor(x => x.UserName)
+                    @Html.ValidationMessageFor(x => x.UserName, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="col-md-3 form-group">
+
+                    @Html.LabelFor(x => x.Password)
+                    @Html.PasswordFor(x => x.Password)
+                    @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
+
+                </div>
+
+                <div class="col-md-3 form-group">
+
+                    <div class="mt-lg-4">
+                        @Html.CheckBoxFor(m => m.ShouldRemember)
+                        @Html.LabelFor(x => x.ShouldRemember)
+                    </div>
+                </div>
+                <div class="col-md-3 form-group ">
+                    @Html.ActionLink("Register me...", "Registration", "LogIn", null, new { @class = "text-warning" })
+                    @*<span class="ml-2">*@
+                        @Html.ActionLink("Forgot password?", "ForgotPassword", "LogIn", null, new { @class = "SecondaryYellow ml-2" })
+                    @*</span>*@
+                </div>
+
+                    <div class="col-md-3 form-group align-center">
+
+                        <button type="submit" class="btn btn-outline-warning">Log in</button>
+                    </div>
+            </fieldset>
+
+        </div>
+    </section>
+
+}

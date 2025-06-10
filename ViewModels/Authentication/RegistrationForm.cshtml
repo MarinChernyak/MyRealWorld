@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewData["Title"] = "Registration Form";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    @using Nostralogia3.Models.Geo
+}
+@model Nostralogia3.Models.Authentication.RegistrationModel
+
+@using (Html.BeginForm("Registration", "LogIn", FormMethod.Post))
+{
+    <section class="bg-dark ">
+        <div class="container">
+            <div class="col-md-10 form-group">
+                <label class="text-danger">@Model.ErrorMessage</label>
+            </div>
+            <fieldset>
+                <legend  class="text-warning ml-lg-4">Registration Form</legend>
+                <div class="col-md-3 form-group">
+
+                    @Html.LabelFor(x => x.UserName)
+                    @Html.EditorFor(x => x.UserName)
+                    <div class="row ml-lg-1">
+                        @Html.ValidationMessageFor(x => x.UserName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-3 form-group">
+
+                    @Html.LabelFor(x => x.Password)
+                    @Html.PasswordFor(x => x.Password)
+                    <div class="row ml-lg-1">
+                        @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-3 form-group">
+                    @Html.LabelFor(x => x.Email)
+                    @Html.EditorFor(x => x.Email)
+                    <div class="row ml-lg-1">
+                        @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-3 form-group">
+                    @Html.LabelFor(x => x.ConfirmEmail)
+                    @Html.EditorFor(x => x.ConfirmEmail)
+                    <div class="row ml-lg-1">
+                        @Html.ValidationMessageFor(x => x.ConfirmEmail, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-3 form-group">
+                    @Html.LabelFor(x => x.FirstName)
+                    @Html.EditorFor(x => x.FirstName)
+                </div>
+                <div class="col-md-3 form-group">
+                    @Html.LabelFor(x => x.MidleName)
+                    @Html.PasswordFor(x => x.MidleName)
+                </div>
+                <div class="col-md-3 form-group">
+                    @Html.LabelFor(x => x.LastName)
+                    @Html.EditorFor(x => x.LastName)
+                </div>
+                <div class="col-md-2 form-group">
+                    @Html.LabelFor(x => x.Sex)
+                    @Html.DropDownListFor(x => x.Sex, Model.SexCollection, null, new { id = "cmbSex" })
+                </div>
+
+                @await Html.PartialAsync("~/Views/UserControls/_EventPlaceView.cshtml", new EventPlaceModel("Where you are? (optional)"))
+
+
+
+                <div class="col-md-3 form-group align-items-center mt-lg-3">
+                    <button type="submit" class="btn btn-outline-warning">Register</button>
+                </div>
+            </fieldset>
+
+        </div>
+</section>
+
+}
