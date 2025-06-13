@@ -2,17 +2,19 @@
 using MyRealWorld.Common;
 using MyRealWorld.Models.Utilities;
 using MyRealWorld.Utilities;
-using NostralogiaDAL.SMGeneralEntities;
+using SMGeneralEntities;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Net.Mail;
+using System.Numerics;
 using System.Text;
 
 namespace MyRealWorld.ModelsAuthentication
 {
     public class MUser : MUserBase
     {
+        public string HeaderForgotPass { get; set; } = "Please enter a user name and email";
         [DisplayName("Enter Email")]
         [Required(ErrorMessage = "Email cannot be empty")]
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
@@ -34,13 +36,26 @@ namespace MyRealWorld.ModelsAuthentication
         [DisplayName("Date of Birth (Optional)")]
         public DateTime Dob { get; set; }
         public string ErrorMessage { get; set; } = string.Empty;
-
         public DateTime ActivationDate { get; set; }
 
 
         public List<SelectListItem> SexCollection { get; protected set; }=new List<SelectListItem>();
+
         public MUser()
         {
+        }
+        public MUser(int id)
+        {
+            UserId= id;
+            UpdateDates();
+        }
+        public MUser(int id, int err)
+        {
+            UserId = id;
+            if (err==SMAuthentication.Constants.ErrorsCodes.ErrorSecurityProtocolDoesNotExist)
+            {
+                HeaderForgotPass = "Your password must be reset! Please enter your user name and email.";
+            }
             UpdateDates();
         }
 

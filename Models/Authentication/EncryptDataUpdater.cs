@@ -1,17 +1,15 @@
-﻿using MyRealWorld.Models;
+﻿using Microsoft.VisualBasic;
+using MyRealWorld.Models;
 using MyRealWorld.Models.Utilities;
-using MyRealWorld.ModelsFactories;
 using MyRealWorld.Utilities;
-using NostralogiaDAL.SMGeneralEntities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using SMAuthentication.Factories;
+using SMGeneralEntities;
+using MyRealWorld.Common;
 
 namespace MyRealWorld.ModelsAuthentication
 {
-    public class EncryptDataUpdater :MUserBase
-    { 
+    public class EncryptDataUpdater : MUserBase
+    {
         public EncryptDataUpdater()
         {
 
@@ -26,7 +24,7 @@ namespace MyRealWorld.ModelsAuthentication
                 if (user != null)
                 {
                     UserLevel = UsersFactory.GetUserLevel(user.Id);
-                    UserName =  user.UserName;
+                    UserName = user.UserName;
                     UserId = user.Id;
                     bRez = true;
                 }
@@ -36,11 +34,11 @@ namespace MyRealWorld.ModelsAuthentication
         }
         public string SetToken(int userId)
         {
-            
-            string token  = Guid.NewGuid().ToString();
+
+            string token = Guid.NewGuid().ToString();
             using (SMGeneralContext _context = new SMGeneralContext())
             {
-                User user = _context.Users.Where(x => x.Id==userId).First();
+                User user = _context.Users.Where(x => x.Id == userId).First();
                 if (user != null)
                 {
                     user.Token = token;
@@ -82,7 +80,7 @@ namespace MyRealWorld.ModelsAuthentication
             {
                 using (SMGeneralContext _context = new SMGeneralContext())
                 {
-                    var secprot = _context.SecurityProtocols.FirstOrDefault(x=>x.UserId==userId);
+                    var secprot = _context.SecurityProtocols.FirstOrDefault(x => x.UserId == userId);
                     if (secprot != null)
                     {
                         string salt = secprot.Salt;
@@ -99,22 +97,22 @@ namespace MyRealWorld.ModelsAuthentication
             }
             return decryptstr;
         }
-        public Dictionary<string, string> DecryptMapStrings(int userId, Dictionary<string,string> map)
+        public Dictionary<string, string> DecryptMapStrings(int userId, Dictionary<string, string> map)
         {
             Dictionary<string, string> mapout = new Dictionary<string, string>();
-           
+
             try
             {
                 using (SMGeneralContext _context = new SMGeneralContext())
                 {
-                    var secprot = _context.SecurityProtocols.FirstOrDefault(x=>x.UserId==userId);
+                    var secprot = _context.SecurityProtocols.FirstOrDefault(x => x.UserId == userId);
                     if (secprot != null)
                     {
                         string salt = secprot.Salt;
                         string passcode = secprot.Passcode;
 
                         RijndaelEncryptor encryptor = new RijndaelEncryptor(salt, passcode);
-                        foreach(string key in map.Keys)
+                        foreach (string key in map.Keys)
                         {
                             mapout[key] = encryptor.Decrypt(map[key]);
                         }
@@ -135,7 +133,7 @@ namespace MyRealWorld.ModelsAuthentication
             {
                 using (SMGeneralContext _context = new SMGeneralContext())
                 {
-                    var secprot = _context.SecurityProtocols.FirstOrDefault(x=>x.UserId==userId);
+                    var secprot = _context.SecurityProtocols.FirstOrDefault(x => x.UserId == userId);
                     if (secprot != null)
                     {
                         string salt = secprot.Salt;
@@ -157,14 +155,12 @@ namespace MyRealWorld.ModelsAuthentication
         }
         public void UpdateEncryptedData(int userId)
         {
-            int SaltLength = 10;
-            int PascodeLength = 12;
             using (SMGeneralContext _context = new SMGeneralContext())
             {
-                var secprot = _context.SecurityProtocols.FirstOrDefault(x=>x.UserId==userId);
+                var secprot = _context.SecurityProtocols.FirstOrDefault(x => x.UserId == userId);
                 if (secprot != null)
                 {
-                    User user = _context.Users.FirstOrDefault(x=>x.Id==userId);
+                    User user = _context.Users.FirstOrDefault(x => x.Id == userId);
                     string salt = secprot.Salt;
                     string passcode = secprot.Passcode;
 
@@ -211,22 +207,26 @@ namespace MyRealWorld.ModelsAuthentication
             {
                 using (SMGeneralContext context = new SMGeneralContext())
                 {
-                    var vsecprot = context.SecurityProtocols.FirstOrDefault(x=>x.UserId==userId);
+                    string salt = string.Empty;
+                    string passcode = string.Empty;
+
+                    var vsecprot = context.SecurityProtocols.FirstOrDefault(x => x.UserId == userId);
                     if (vsecprot != null)
                     {
-                        User user = context.Users.FirstOrDefault(x => x.Id ==userId);
-                        string salt = vsecprot.Salt;
-                        string passcode = vsecprot.Passcode;
-
+                       
+                        salt = vsecprot.Salt;
+                        passcode = vsecprot.Passcode;
+                        User user = context.Users.FirstOrDefault(x => x.Id == userId);
                         RijndaelEncryptor encryptor = new RijndaelEncryptor(salt, passcode);
                         user.Password = encryptor.Decrypt(user.Password);
-                        user.FirstName = encryptor.Decrypt(user.FirstName);
-                        user.Email = encryptor.Decrypt(user.Email);
-                        user.LastName = encryptor.Decrypt(user.LastName);
-                        user.MidleName = encryptor.Decrypt(user.MidleName);
-                        model = ModelsTransformer.TransferModel<User, MUser>(user);                        
+                        //user.FirstName = encryptor.Decrypt(user.FirstName);
+                        //user.Email = encryptor.Decrypt(user.Email);
+                        //user.LastName = encryptor.Decrypt(user.LastName);
+                        //user.MidleName = encryptor.Decrypt(user.MidleName);
+                        model = ModelsTransformer.TransferModel<User, MUser>(user);
                     }
-                }
+                }                
+               
             }
             catch (Exception e)
             {
@@ -247,10 +247,10 @@ namespace MyRealWorld.ModelsAuthentication
                 try
                 {
                     RijndaelEncryptor encryptor = new RijndaelEncryptor(salt, passcode);
-                    muser.FirstName = encryptor.Encrypt(muser.FirstName);
-                    muser.MidleName = encryptor.Encrypt(muser.MidleName);
-                    muser.LastName = encryptor.Encrypt(muser.LastName);
-                    muser.Email = encryptor.Encrypt(muser.Email);
+                    //muser.FirstName = encryptor.Encrypt(muser.FirstName);
+                    //muser.MidleName = encryptor.Encrypt(muser.MidleName);
+                    //muser.LastName = encryptor.Encrypt(muser.LastName);
+                    //muser.Email = encryptor.Encrypt(muser.Email);
                     muser.Password = encryptor.Encrypt(muser.Password);
 
                     User user = ModelsTransformer.TransferModel<MUser, User>(muser);
@@ -265,7 +265,8 @@ namespace MyRealWorld.ModelsAuthentication
                                 Passcode = passcode,
                                 Salt = salt,
                                 UserName = muser.UserName,
-                                DateCreation = DateTime.Now
+                                DateCreation = DateTime.Now,
+                                UserId = muser.UserId
                             };
                             _context.SecurityProtocols.Add(sp);
                         }
@@ -293,7 +294,5 @@ namespace MyRealWorld.ModelsAuthentication
 
             return bRez;
         }
-
-
     }
 }

@@ -1,7 +1,9 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model Nostralogia3.Models.Authentication.LogInModel
+<link rel="stylesheet" href="~/css/LogIn.css" />
+@model MyRealWorld.Models.Authentication.LogInModel
+
 @using (Html.BeginForm("LogIn", "LogIn", FormMethod.Post))
 {
     <section id="LogIn" class="bg-dark">
@@ -9,38 +11,33 @@
             <div class="ErrorMessage text-danger">@Model.ErrorMessage </div>
             <fieldset>
                 <legend>Log in Form</legend>
-
-                <div class="col-md-3 form-group">
-
-                    @Html.LabelFor(x => x.UserName)
-                    @Html.EditorFor(x => x.UserName)
-                    @Html.ValidationMessageFor(x => x.UserName, "", new { @class = "text-danger" })
-
+                <div class="mb-3">
+                    <label for="UserName" class="form-label labels_of_controls">User Name</label>
+                    <input asp-for="UserName" type="text" class="form-control midium_txt" id="txtUserjName" placeholder="UserName is required">
                 </div>
-                <div class="col-md-3 form-group">
-
-                    @Html.LabelFor(x => x.Password)
-                    @Html.PasswordFor(x => x.Password)
+                <div class="mb-3">
+                    <label for="Password" class="form-label labels_of_controls">Password</label>
+                    <input asp-for="Password" type="password" class="form-control midium_txt" id="txtPass" placeholder="Password is required">
+                </div>
+                <div class="mb-3">
                     @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
 
                 </div>
-
-                <div class="col-md-3 form-group">
-
-                    <div class="mt-lg-4">
-                        @Html.CheckBoxFor(m => m.ShouldRemember)
-                        @Html.LabelFor(x => x.ShouldRemember)
-                    </div>
+                <div class="mb-3">
+                    <input asp-for="ShouldRemember" type="checkbox" id="chRemember">
+                    <label for="chRemember" class="form-label labels_of_controls">Remember me...</label>
+                    
                 </div>
-                <div class="col-md-3 form-group ">
-                    @Html.ActionLink("Register me...", "Registration", "LogIn", null, new { @class = "text-warning" })
-                    @*<span class="ml-2">*@
-                        @Html.ActionLink("Forgot password?", "ForgotPassword", "LogIn", null, new { @class = "SecondaryYellow ml-2" })
-                    @*</span>*@
+                <div class="mb-3">
+                    @Html.ActionLink("Sign up...", "Registration", "LogIn", null, new { @class = "alink" })
+                </div>
+                <div class="mb-3">
+                    @Html.ActionLink("Forgot password?", "ForgotPassword", "LogIn", null, new { @class = "alink" })
                 </div>
 
-                    <div class="col-md-3 form-group align-center">
 
+
+                    <div class="col-md-3 form-group align-center mt-5">
                         <button type="submit" class="btn btn-outline-warning">Log in</button>
                     </div>
             </fieldset>

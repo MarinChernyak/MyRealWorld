@@ -2,6 +2,7 @@
 using MRW_DAL.MyWEntities;
 using MyRealWorld.Common;
 using MyRealWorld.Models.DataWorking;
+using MyRealWorld.Models.Utilities;
 using System.Net;
 using Project = MRW_DAL.MyWEntities.Project;
 
@@ -197,8 +198,9 @@ namespace MyRealWorld.ViewModels.Programming
             catch(Exception ex)
             {
                 success = false;
-                
-                // Log the exception or handle it as needed
+
+                LogMaster logMaster = new LogMaster();
+                logMaster.SetLog($"Error uploading picture: {ex.Message}");
             }
 
             return success;

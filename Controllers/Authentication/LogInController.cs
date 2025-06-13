@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Authentication.Factories;
+using Microsoft.AspNetCore.Mvc;
 using MyRealWorld.Common;
 using MyRealWorld.Helpers;
+using MyRealWorld.Models.Authentication;
 using MyRealWorld.ModelsAuthentication;
-
 namespace MyRealWorld.Controllers.Authentication
 {
     public class LogInController : BaseController
@@ -19,7 +20,7 @@ namespace MyRealWorld.Controllers.Authentication
                     token = updater.SetToken(updater.UserId);
                     SessionHelper.SetObjectAsJson(HttpContext.Session, Constants.SessionCoockies.SessionUName, updater.UserName);
                     SessionHelper.SetObjectAsJson(HttpContext.Session, Constants.SessionCoockies.SessionULevel, updater.UserLevel.ToString());
-                    SessionHelper.SetObjectAsJson(HttpContext.Session, Constants.SessionCoockies.SessionUID, updater.Id.ToString());
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, Constants.SessionCoockies.SessionUID, updater.UserId.ToString());
 
                     CoockiesHelper.SetCockie(HttpContext, Constants.SessionCoockies.CoockieToken, token);
                     return RedirectToAction("Index", "Home");
@@ -42,10 +43,19 @@ namespace MyRealWorld.Controllers.Authentication
         public ActionResult LogIn(LogInModel model)
         {
             string token = string.Empty;
-            bool brez = model.TryLogIn(out token);
-            if (!brez)
+            UserLogIn ulin = model.TryLogIn();
+            if(ulin == null)
+            {
+                model.ErrorMessage = "Login failed. Please try again.";
+                return View("~/Views/Authentication/LogInStandAlone.cshtml", model);
+            }
+            else if (ulin.ErrorCode== SMAuthentication.Constants.ErrorsCodes.ErrorInvalidPassword)
                 return RedirectToAction("ReLogIn");
-            else
+            else if (ulin.ErrorCode == SMAuthentication.Constants.ErrorsCodes.ErrorSecurityProtocolDoesNotExist)
+            {
+                return RedirectToAction("ForgotPassword", new {id=ulin.Id, err = SMAuthentication.Constants.ErrorsCodes.ErrorSecurityProtocolDoesNotExist });
+            }
+            else if (ulin.ErrorCode == SMAuthentication.Constants.ErrorsCodes.NoError)
             {
                 if (model.ShouldRemember && !string.IsNullOrEmpty(token))
                 {
@@ -54,10 +64,12 @@ namespace MyRealWorld.Controllers.Authentication
                 }
                 SessionHelper.SetObjectAsJson(HttpContext.Session, Constants.SessionCoockies.SessionUName, model.UserName);
                 SessionHelper.SetObjectAsJson(HttpContext.Session, Constants.SessionCoockies.SessionULevel, model.UserLevel.ToString());
-                SessionHelper.SetObjectAsJson(HttpContext.Session, Constants.SessionCoockies.SessionUID, model.Id.ToString());
+                SessionHelper.SetObjectAsJson(HttpContext.Session, Constants.SessionCoockies.SessionUID, model.UserId.ToString());
 
-                return RedirectToAction("HomePage", "Home");
+                return RedirectToAction("Index", "Home");
             }
+            else
+                return RedirectToAction("ReLogIn");
         }
         public ActionResult Registration()
         {
@@ -102,9 +114,9 @@ namespace MyRealWorld.Controllers.Authentication
             return RedirectToAction("HomePage", "Home");
         }
 
-        public ActionResult ForgotPassword()
+        public ActionResult ForgotPassword(int id, int err = SMAuthentication.Constants.ErrorsCodes.NoError)
         {
-            MUser model = new MUser();
+            MUser model = new MUser(id, err);
 
             return View("~/Views/Authentication/ForgotPassword.cshtml", model);
         }

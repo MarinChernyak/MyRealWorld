@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyRealWorld", "MyRealWorld.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MRW_DAL", "..\MRW_DAL\MRW_DAL.csproj", "{CB49B8BF-87F6-D566-4A30-816B186DCBFD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication", "..\Authentication\Authentication.csproj", "{3A23DF59-147F-4A7B-873B-FEDDC256311A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMCommonUtilities", "..\SMCommonUtilities\SMCommonUtilities.csproj", "{6EA55AEC-7D46-45F1-B534-E53ED1344D0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{CB49B8BF-87F6-D566-4A30-816B186DCBFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB49B8BF-87F6-D566-4A30-816B186DCBFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB49B8BF-87F6-D566-4A30-816B186DCBFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A23DF59-147F-4A7B-873B-FEDDC256311A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A23DF59-147F-4A7B-873B-FEDDC256311A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A23DF59-147F-4A7B-873B-FEDDC256311A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A23DF59-147F-4A7B-873B-FEDDC256311A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EA55AEC-7D46-45F1-B534-E53ED1344D0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EA55AEC-7D46-45F1-B534-E53ED1344D0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EA55AEC-7D46-45F1-B534-E53ED1344D0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EA55AEC-7D46-45F1-B534-E53ED1344D0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

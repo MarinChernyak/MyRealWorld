@@ -2,9 +2,8 @@
 @{
     
     Layout = "~/Views/Shared/_Layout2.cshtml";
-    @using Nostralogia3.Models.Geo
 }
-@model Nostralogia3.Models.Authentication.MyAccount
+@* @model SMAuthentication.Models.Authentication.MyAccount *@
 
 
 @using (Html.BeginForm("MyAccount", "LogIn", FormMethod.Post))
@@ -14,7 +13,7 @@
             <div class="col-md-10 form-group">
                 <label class="text-danger">@Model.ErrorMessage</label>
             </div>
-            <fieldset>
+           @*  <fieldset>
                 <legend class="text-warning ml-lg-4">My Account</legend>
                 <div class="col-md-3 form-group">
 
@@ -82,9 +81,9 @@
                 <div class="col-md-3 form-group align-items-center mt-lg-3">
                     <button type="submit" class="btn btn-outline-warning">Update</button>
                 </div>
-            </fieldset>
+            </fieldset> *@
 
         </div>
     </section>
-    @Html.HiddenFor(x=>x.Id)
+   @*  @Html.HiddenFor(x=>x.Id) *@
 }

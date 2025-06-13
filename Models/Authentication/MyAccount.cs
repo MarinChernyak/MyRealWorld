@@ -1,6 +1,6 @@
 ﻿using MyRealWorld.Common;
 using MyRealWorld.Models.Geo;
-using NostralogiaDAL.SMGeneralEntities;
+using SMGeneralEntities;
 using System.ComponentModel;
 
 namespace MyRealWorld.ModelsAuthentication
@@ -33,7 +33,7 @@ namespace MyRealWorld.ModelsAuthentication
             Password = muser.Password;
             LastName = muser.LastName;
             Email = muser.Email;
-            Id = muser.Id;
+            UserId = muser.UserId;
             IsActive = muser.IsActive;
             Sex = muser.Sex;
             Dob = muser.Dob;
@@ -42,7 +42,7 @@ namespace MyRealWorld.ModelsAuthentication
             using (SMGeneralContext context = new SMGeneralContext())
             {
                 var uar = context.UserAppRoles.Join(context.Roles, uappr => uappr.RoleId, r => r.RoleId,
-                (uappr, r) => new { Uapr = uappr, R = r }).Where(z => z.R.AppId == Constants.Values.ApplicationId && z.Uapr.UserId == Id).FirstOrDefault();
+                (uappr, r) => new { Uapr = uappr, R = r }).Where(z => z.R.AppId == Constants.Values.ApplicationId && z.Uapr.UserId == UserId).FirstOrDefault();
                 if (uar != null)
                 {
                     RoleId = uar.R.RoleId;
@@ -60,7 +60,7 @@ namespace MyRealWorld.ModelsAuthentication
             muser.LastName= LastName;
             muser.Email= Email;
             muser.Password = Password;
-            muser.Id = Id;
+            muser.UserId = UserId;
             muser.IsActive= IsActive;
             muser.Sex= Sex;
             muser.Dob= Dob;

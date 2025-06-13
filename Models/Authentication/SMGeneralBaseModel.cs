@@ -1,4 +1,4 @@
-﻿using NostralogiaDAL.SMGeneralEntities;
+﻿using SMGeneralEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

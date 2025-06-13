@@ -2,13 +2,13 @@
 @{
     ViewData["Title"] = "Registration Form";
     Layout = "~/Views/Shared/_Layout2.cshtml";
-    @using Nostralogia3.Models.Geo
+    // @using SMAuthentication.Models.Geo
 }
-@model Nostralogia3.Models.Authentication.RegistrationModel
+@* @model SMAuthentication.Models.Authentication.RegistrationModel *@
 
 @using (Html.BeginForm("Registration", "LogIn", FormMethod.Post))
 {
-    <section class="bg-dark ">
+   @*  <section class="bg-dark ">
         <div class="container">
             <div class="col-md-10 form-group">
                 <label class="text-danger">@Model.ErrorMessage</label>
@@ -72,6 +72,6 @@
             </fieldset>
 
         </div>
-</section>
+</section> *@
 
 }

@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using MRW_DAL.MyWEntities;
 using MyRealWorld.Common;
+using MyRealWorld.Models.Utilities;
 using Project = MRW_DAL.MyWEntities.Project;
 
 
@@ -71,6 +72,8 @@ namespace MyRealWorld.ViewModels.Programming
                     catch (Exception e)
                     {
                         Err= ERROR_CODES.ERROR_DELETING_PROJECT;
+                        LogMaster logMaster = new LogMaster();
+                        logMaster.SetLog($"Error deleting project with ID {projId}: {e.Message}");
                     }
                 }
                 if(Err == ERROR_CODES.NO_ERROR)
@@ -93,6 +96,9 @@ namespace MyRealWorld.ViewModels.Programming
                             catch (Exception e)
                             {
                                 Err = ERROR_CODES.ERROR_DELETING_PICTURE_DB;
+                                LogMaster logMaster = new LogMaster();
+                                logMaster.SetLog($"Error deleting picture with ID {idImg} for project {projId}");
+                                logMaster.SetLog($"Exception: {e.Message}");
                             }
                             try
                             {

@@ -1,6 +1,6 @@
 ﻿using MyRealWorld.Models.Utilities;
 using MyRealWorld.Utilities;
-using NostralogiaDAL.SMGeneralEntities;
+using SMGeneralEntities;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
