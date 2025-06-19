@@ -3,6 +3,7 @@ using MyRealWorld.Common;
 using MyRealWorld.Models;
 using MyRealWorld.Models.Utilities;
 using System.Reflection;
+using SMUtilities;
 
 namespace MyRealWorld.ViewModels
 {

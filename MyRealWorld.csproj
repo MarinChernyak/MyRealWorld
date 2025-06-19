@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>0e600043-57a3-49d5-89b0-de32ca3bd230</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="ViewModels\Authentication\MyAccount.cshtml" />
     <Content Remove="Views\DataWorking\UploadPicture.cshtml" />
   </ItemGroup>
 
@@ -44,7 +44,6 @@
   <ItemGroup>
     <Folder Include="BL\DataWorking\" />
     <Folder Include="css\" />
-    <Folder Include="ViewModels\Authentication\" />
     <Folder Include="Views\Admin\" />
     <Folder Include="Views\DataWorking\" />
     <Folder Include="wwwroot\images\ProjectsImages\" />

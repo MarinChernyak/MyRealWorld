@@ -1,57 +1,33 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Authentication.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MyRealWorld.Common;
-using MyRealWorld.Models.Utilities;
-using MyRealWorld.Utilities;
+using SMAuthentication.Authentication;
 using SMGeneralEntities;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Net.Mail;
-using System.Numerics;
 using System.Text;
+using SMUtilities;
+using Authentication.Factories;
 
 namespace MyRealWorld.ModelsAuthentication
 {
-    public class MUser : MUserBase
+    public class MUserVM : MUser
     {
+        public string ErrMessage { get; set; } = string.Empty;
         public string HeaderForgotPass { get; set; } = "Please enter a user name and email";
-        [DisplayName("Enter Email")]
-        [Required(ErrorMessage = "Email cannot be empty")]
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
-        public string Email { get; set; } = string.Empty;
-        [DisplayName("Email")]
-        public short? CountryId { get; set; }
-        [DisplayName("State/Province/Land (Optional)")]
-        public int? StateId { get; set; }
-        [DisplayName("City/Town (Optional)")]
-        public int? PlaceId { get; set; }
-        [DisplayName("First Name (Optional)")]
-        public string  FirstName { get; set; } = string.Empty;
-        [DisplayName("Last Name (Optional)")]
-        public string LastName { get; set; } = string.Empty;
-        [DisplayName("Midle Name (Optional)")]
-        public string MidleName { get; set; } = string.Empty;
-        [DisplayName("Gender (Optional)")]
-        public short? Sex { get; set; }
-        [DisplayName("Date of Birth (Optional)")]
-        public DateTime Dob { get; set; }
-        public string ErrorMessage { get; set; } = string.Empty;
-        public DateTime ActivationDate { get; set; }
-
-
         public List<SelectListItem> SexCollection { get; protected set; }=new List<SelectListItem>();
 
-        public MUser()
+        public MUserVM()
         {
         }
-        public MUser(int id)
+        public MUserVM(int id)
         {
-            UserId= id;
+            Id= id;
             UpdateDates();
         }
-        public MUser(int id, int err)
+        public MUserVM(int id, int err)
         {
-            UserId = id;
+            Id = id;
             if (err==SMAuthentication.Constants.ErrorsCodes.ErrorSecurityProtocolDoesNotExist)
             {
                 HeaderForgotPass = "Your password must be reset! Please enter your user name and email.";
@@ -67,9 +43,9 @@ namespace MyRealWorld.ModelsAuthentication
             {
                 using (SMGeneralContext _context = new SMGeneralContext())
                 {
-                    SecurityProtocol prot = _context.SecurityProtocols.FirstOrDefault(x => x.UserId == UserId);
-                    EncryptDataUpdater datapdater = new EncryptDataUpdater();
-                    MUser muser = datapdater.GetDecryptedUser(UserId);
+                    SecurityProtocol prot = _context.SecurityProtocols.FirstOrDefault(x => x.UserId == Id);
+                    
+                    MUser muser = EncryptionHelper.GetDecryptedUser(Id,AppId);
                     if (!string.IsNullOrEmpty(muser.Email))
                     {
                         StringGenerator gen = new StringGenerator(8, true, false, true, true);
@@ -104,7 +80,7 @@ namespace MyRealWorld.ModelsAuthentication
                                 }
 
                             }
-                            bIsOK = datapdater.SetEncryptedUser(muser);
+                            bIsOK = EncryptionHelper.EncryptUser(muser);
                         }
                         catch (Exception e)
                         {
@@ -117,7 +93,7 @@ namespace MyRealWorld.ModelsAuthentication
             }
             else
             {
-                ErrorMessage = "User with this user name and/or email was not found!";
+                ErrMessage = "User with this user name and/or email was not found!";
             }
 
             return bIsOK;

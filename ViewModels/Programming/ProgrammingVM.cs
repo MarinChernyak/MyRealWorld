@@ -1,9 +1,7 @@
-﻿using Microsoft.Build.Evaluation;
-using Microsoft.CodeAnalysis;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.CodeAnalysis;
 using MRW_DAL.MyWEntities;
 using MyRealWorld.Common;
-using MyRealWorld.Models.Utilities;
+using SMUtilities;
 using Project = MRW_DAL.MyWEntities.Project;
 
 
@@ -112,6 +110,8 @@ namespace MyRealWorld.ViewModels.Programming
                             catch (Exception e)
                             {
                                 Err = ERROR_CODES.ERROR_DELETING_PROJECT_PICTURE;
+                                LogMaster lm = new LogMaster();
+                                lm.SetLog(e.Message);
                             }
                             context.SaveChanges();
 

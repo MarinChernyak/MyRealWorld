@@ -1,11 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using MyRealWorld.Models.Utilities;
-using System;
-using System.Collections.Generic;
+﻿using SMUtilities;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace MyRealWorld.Models
 {

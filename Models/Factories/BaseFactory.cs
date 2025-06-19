@@ -1,13 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 using MyRealWorld.Common;
 using MyRealWorld.Models.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using SMUtilities;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace MyRealWorld.Models.Factories
 {

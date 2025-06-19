@@ -25,7 +25,7 @@ namespace MyRealWorld.Common
             public const string ConnectionSMGeneral = "ConnectionSMGeneral";
 
             public const string EmailFrom = "nostralogia@gmail.com";
-            public const string PassFrom = "Shofar8385";
+            public const string PassFrom = "mhgoqfyhqwsgdvyh";
 
 
         }
@@ -64,6 +64,11 @@ namespace MyRealWorld.Common
         public class DataTypes
         {
             public const int DataPublic = 1;
+        }
+        public class ErrorCodes
+        {
+            public const int Err_No_Errors = 0;
+            public const int Error_SMTP_Problem = 100;
         }
 
     }

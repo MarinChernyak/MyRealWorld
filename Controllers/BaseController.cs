@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyRealWorld.ViewModels;
 using MyRealWorld.Common;
+using MyRealWorld.Models.Authentication;
 
 namespace MyRealWorld.Controllers
 {
@@ -37,11 +38,11 @@ namespace MyRealWorld.Controllers
             }
             return ilevel;
         }
-        protected void SetSessionVariables(MUserBase model)
+        protected void SetSessionVariables(LogInModel model)
         {
             HttpContext.Session.SetString(Constants.SessionCoockies.SessionUName, model.UserName);
-            HttpContext.Session.SetString(Constants.SessionCoockies.SessionUID, model.UserId.ToString());
-            HttpContext.Session.SetString(Constants.SessionCoockies.SessionULevel, model.UserLevel.ToString());
+            HttpContext.Session.SetString(Constants.SessionCoockies.SessionUID, model.Id.ToString());
+            HttpContext.Session.SetString(Constants.SessionCoockies.SessionULevel, model.UserAccessLevel.ToString());
            
         }
         protected void DeleteSessionVariables()

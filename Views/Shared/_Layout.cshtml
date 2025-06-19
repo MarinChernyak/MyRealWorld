@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using MyRealWorld.Common
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -6,9 +9,12 @@
     <title>@ViewData["Title"] - MyRealWorld</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/myworld.css" />
-    
+
 </head>
 <body>
+    @{
+        var user_name = HttpContextAccessor.HttpContext.Session.GetString(Constants.SessionCoockies.SessionUName);
+    }
     <header >
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow mb-3">
             <div class="container-fluid bg-dark">
@@ -25,7 +31,14 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="NonProgramming"><span class="menu_labels">Else...</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="LogIn" asp-action="LogIn"><span class="menu_labels">{Login...}</span></a>
+                                @if (string.IsNullOrEmpty(user_name))
+                                {
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="LogIn" asp-action="LogIn"><span class="menu_labels">Login</span></a>
+                                }
+                                else
+                                {
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="LogIn" asp-action="LogOut"><span class="menu_labels_grey">Logout</span></a>
+                                }
                             </li>
                         </ul>
                     </div>

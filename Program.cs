@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MyRealWorld.Models.Authentication;
 
 
 
@@ -6,14 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
-//builder.Services.AddDbContext<MRWContext>(options =>
-//{
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-//});
+builder.Services.Configure<GmailOptions>(
+    builder.Configuration.GetSection(GmailOptions.GMailOptionsKey));
+builder.Services.AddSession();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 var app = builder.Build();
-
+app.UseSession();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -24,7 +24,6 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 
 app.UseAuthorization();

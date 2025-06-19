@@ -2,7 +2,7 @@
 using MRW_DAL.MyWEntities;
 using MyRealWorld.Models;
 using MyRealWorld.Models.DataWorking;
-using MyRealWorld.Models.Utilities;
+using SMUtilities;
 
 namespace MyRealWorld.BL
 {
