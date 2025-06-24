@@ -1,15 +1,18 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Azure;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MyRealWorld.ModelsAuthentication;
+using MyRealWorld.Common;
 using MyRealWorld.Helpers;
 using MyRealWorld.Models;
+using MyRealWorld.Models.Authentication;
+using MyRealWorld.ModelsAuthentication;
+using MyRealWorld.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
-using MyRealWorld.ViewModels;
-using MyRealWorld.Common;
-using MyRealWorld.Models.Authentication;
 
 namespace MyRealWorld.Controllers
 {
@@ -51,6 +54,15 @@ namespace MyRealWorld.Controllers
             HttpContext.Session.Remove(Constants.SessionCoockies.SessionULevel);
             HttpContext.Session.Remove(Constants.SessionCoockies.SessionUID);
         }
-
+        protected int GetUserId()
+        {
+            int id = 0;
+            string sid = HttpContext.Session.GetString(Constants.SessionCoockies.SessionUID);
+            if (!string.IsNullOrEmpty(sid))
+            {
+                bool rez = int.TryParse(sid, out id);              
+            }
+            return id;
+        }
     }
 }

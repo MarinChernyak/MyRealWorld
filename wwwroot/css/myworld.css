@@ -5,6 +5,17 @@
     min-height: 90%;
     height: 90%;
 }
+a{
+    text-decoration:none;
+}
+.legend {   
+    font-family: 'Segoe UI';
+    color: moccasin;
+    font-size: 35px;
+    font-weight: bold;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
 .vcontainer {
     width: 22px;
     height: 100%;
@@ -62,10 +73,11 @@
     font-size:25px;
     margin-right:20px;
 }
-.menu_labels_grey {
+.menu_labels_grey, .menu_labels_grey a, .menu_labels_grey a:visited {
     font-family: 'Segoe Print';
     color: #808080;
     font-size: 20px;
     margin-right: 20px;
-    margin-top:20px;
+    margin-top: 20px;
+    text-decoration:none;
 }

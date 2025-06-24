@@ -15,7 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Authentication\GmailOptions.cs" />
     <Compile Remove="Models\Geo\EventPlaceModel.cs" />
+    <Compile Remove="Models\Person.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +41,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.6" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>

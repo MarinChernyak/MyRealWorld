@@ -18,10 +18,10 @@
     <header >
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow mb-3">
             <div class="container-fluid bg-dark">
-                <div class="col-9">
+                <div class="col-8">
                     <a class="navbar-brand welcome_label" asp-area="" asp-controller="Home" asp-action="Index"><span class="welcome_label">Welcome to my real world...</span></a>
                 </div>
-                <div class="col-3">
+                <div class="col-4">
                     <div class="navbar-collapse collapse " >
                         <ul class="navbar-nav flex-grow-1" >
                             <li class="nav-item">
@@ -37,7 +37,7 @@
                                 }
                                 else
                                 {
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="LogIn" asp-action="LogOut"><span class="menu_labels_grey">Logout</span></a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="LogIn" asp-action="MyAccount"><span class="menu_labels_grey">My Account</span></a>
                                 }
                             </li>
                         </ul>
@@ -53,9 +53,14 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - MyRealWorld - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+        <div class="row">
+            <div class="col-1"> &copy; 2025 - MyRealWorld </div>
+            <div class="col-1"><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy"><span class="menu_labels_grey">Privacy</span></a></div>
+            <div class="col-8"></div>
+            <div class="col-2">                
+                <a class="nav-link text-dark" asp-area="" asp-controller="LogIn" asp-action="LogOut"><span class="menu_labels_grey">Logout</span></a>
+            </div>
+          </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

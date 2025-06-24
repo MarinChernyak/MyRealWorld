@@ -7,6 +7,9 @@ h1 {
     margin-top:50px;
     margin-bottom:50px;
 }
+a{
+    text-decoration:none;
+}
 button{
     margin-bottom:30px;
 }
@@ -127,4 +130,11 @@ button{
     font-weight:bold;
     color:navy;
     text-align:center;
+}
+.offline_labels, .offline_labels a, .offline_labels:visited {
+    color: #0a537e;
+    font-size: 12px;
+    font-style: italic;
+    cursor: pointer;
+    text-decoration: none;
 }

@@ -7,8 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.Configure<GmailOptions>(
-    builder.Configuration.GetSection(GmailOptions.GMailOptionsKey));
 builder.Services.AddSession();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

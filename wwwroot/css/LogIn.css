@@ -2,13 +2,32 @@
     background-color: #0a1a03;
 
 }
+a {
+    font-family: 'Segoe UI';
+    color: #6cc3ef;
+    font-size: 20px;
+    text-decoration:none;
+}
+h1 {
+    font-family: 'Segoe UI';
+    color: moccasin;
+    font-size: 35px;
+    font-weight: bolder;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
 fieldset {
     padding-bottom: 70px;
     min-height: 80vh;
 }
 legend {
-    color: antiquewhite;
-    font-size:28px;
+    
+    font-family: 'Segoe UI';
+    color: moccasin;
+    font-size: 35px;
+    font-weight: bold;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 .midium_txt {
     width: 500px;
@@ -35,5 +54,22 @@ legend {
 .alink:hover {
     color: #ffd800;
 
+}
+.InfoMsg {
+    font-family: 'Segoe UI';
+    color: #6cc3ef;
+    font-size: 25px;
+    font-weight: bolder;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.ErrMsg {
+    font-family: 'Segoe UI';
+    color: #ff6a00;
+    font-size: 35px;
+    font-weight: bolder;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 

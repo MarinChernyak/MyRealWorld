@@ -6,8 +6,10 @@ using MyRealWorld.Common;
 using MyRealWorld.Helpers;
 using MyRealWorld.Models.Authentication;
 using MyRealWorld.ModelsAuthentication;
+using MyRealWorld.ViewModels.Authentification;
 using SMAuthentication.Authentication;
 using SMAuthentication.Factories;
+using SMCommonUtilities;
 using System.Security.Cryptography;
 using System.Text;
 namespace MyRealWorld.Controllers.Authentication
@@ -24,7 +26,7 @@ namespace MyRealWorld.Controllers.Authentication
                 var muser = UsersFactoryHelpers.CheckToken(token,Constants.Values.ApplicationId);
                 if (muser!=null)
                 {
-                    token = UsersFactoryHelpers.SetToken(muser);
+                    token = UsersFactoryHelpers.SetToken(muser.Id);
                     SessionHelper.SetObjectAsJson(HttpContext.Session, Constants.SessionCoockies.SessionUName, muser.UserName);
                     SessionHelper.SetObjectAsJson(HttpContext.Session, Constants.SessionCoockies.SessionULevel, muser.UserAccessLevel.ToString());
                     SessionHelper.SetObjectAsJson(HttpContext.Session, Constants.SessionCoockies.SessionUID, muser.Id.ToString());
@@ -50,8 +52,11 @@ namespace MyRealWorld.Controllers.Authentication
         public ActionResult LogIn(LogInModel model)
         {
             string token = string.Empty;
-            int err = model.TryLogIn();
-            if(err== SMAuthentication.Constants.ErrorsCodes.ErrorInvalidPassword)
+            int err = SMAuthentication.Constants.ErrorsCodes.NoError;
+            StrResponse sr = model.TryLogIn();
+            token = sr.GetValueByName("token");
+            err = sr.ErrCode;
+            if (err== SMAuthentication.Constants.ErrorsCodes.ErrorInvalidPassword)
             {
                 model.ErrorMessage = "Login failed. Please try again.";
                 return View("~/Views/Authentication/LogInStandAlone.cshtml", model);
@@ -77,6 +82,12 @@ namespace MyRealWorld.Controllers.Authentication
                 limodel.ErrorMessage = "Please log in with a password, which has been sent to you by email";
                 return View("~/Views/Authentication/LogInStandAlone.cshtml", limodel);
             }
+            else if(err== SMAuthentication.Constants.ErrorsCodes.Error_UserInactive)
+            {
+                LogInModel limodel = new LogInModel();
+                limodel.ErrorMessage = "The account was not activated. Please response for the email, we sent you.";
+                return View("~/Views/Authentication/LogInStandAlone.cshtml", limodel);
+            }
             else
                 return RedirectToAction("ReLogIn");
         }
@@ -95,17 +106,37 @@ namespace MyRealWorld.Controllers.Authentication
                 bool EmailExists = model.EmailExists();
                 if (UserNameExists)
                 {
-                    ModelState.AddModelError("UserName", "This User name already exists");
+                    model.ErrMessage="This User name already exists";
                 }
                 if (EmailExists)
                 {
-                    ModelState.AddModelError("Email", "This email already exists");
+                    model.ErrMessage = "This email already registered";
                 }
 
                 if (!UserNameExists && !EmailExists)
                 {
+                    string url = Url.Action("Activatedpage", "LogIn", new { uname = model.UserName }, "https", Request.Host.Value);
                     bool brez = model.SaveNewUser();
+
                     if (brez)
+                    {
+                        SMEmailer emailer = new SMEmailer()
+                        {
+                            Email = model.Email,
+                            EmailFrom = Constants.Connections.EmailFrom,
+                            PassFrom = Constants.Connections.PassFrom
+                        };
+                        if(emailer.EmailActivationPage(model.UserName, url))
+                        {
+                            return View("~/Views/Authentication/LogInStandAlone.cshtml", new LogInModel());
+                        }
+                        else
+                        {
+                            model.ErrMessage = "Account was not activated, plase ask an admin about details";
+                            return View("~/Views/Authentication/RegistrationForm.cshtml", model);
+                        }
+                    }
+                    else
                     {
                         return View("~/Views/Authentication/LogInStandAlone.cshtml", new LogInModel());
                     }
@@ -115,12 +146,18 @@ namespace MyRealWorld.Controllers.Authentication
 
             return View("~/Views/Authentication/RegistrationForm.cshtml", model);
         }
+        public ActionResult Activatedpage(string uname)
+        {
+            ActivatePage model = new ActivatePage(uname, true);
+            return View("~/Views/Authentication/Activatedpage.cshtml", model);
+        }
         public ActionResult LogOut()
         {
             CoockiesHelper.DeleteCockie(HttpContext, Constants.SessionCoockies.CoockieToken);
-            DeleteSessionVariables();
+            UsersFactoryHelpers.DeleteToken(GetUserId());
+            DeleteSessionVariables();            
 
-            return RedirectToAction("HomePage", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult ResetPassword(int id, int err = SMAuthentication.Constants.ErrorsCodes.NoError)
@@ -153,14 +190,12 @@ namespace MyRealWorld.Controllers.Authentication
         [HttpPost]
         public ActionResult MyAccount(MyAccount model)
         {
-            if (model != null)
+            if (model != null && ModelState.IsValid)
             {
                 bool bRez = model.SaveData();
-                //EncryptDataUpdater updater = new EncryptDataUpdater();
-                //bool bRez= updater.SetEncryptedUser(model);
                 if (bRez)
                 {
-                    return RedirectToAction("HomePage", "Home");
+                    return RedirectToAction("Index", "Home");
                 }
             }
             model.ErrMessage = "Updating data failed. Pleas etry again later.";

@@ -9,7 +9,8 @@ namespace MyRealWorld.ViewModels
 {
     public class ViewModelBase : BaseModel
     {
-        public string ErrorMessage { get; protected set; } = string.Empty;
+        public string Message { get; protected set; } = string.Empty;
+        public string classMsg { get; protected set; } = string.Empty;
         public ViewModelBase()
         {
 

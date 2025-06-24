@@ -1,8 +1,11 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using MyRealWorld.Common;
+using MyRealWorld.Helpers;
 using MyRealWorld.Models;
 using MyRealWorld.ViewModels;
 using MyRealWorld.ViewModels.Programming;
+using SMAuthentication.Factories;
+using System.Diagnostics;
 
 namespace MyRealWorld.Controllers
 {
@@ -17,7 +20,25 @@ namespace MyRealWorld.Controllers
 
         public IActionResult Index()
         {
-           
+            string token = CoockiesHelper.GetCockie(HttpContext, Constants.SessionCoockies.CoockieToken);
+            if (!string.IsNullOrEmpty(token))
+            {
+
+                var muser = UsersFactoryHelpers.CheckToken(token, Constants.Values.ApplicationId);
+                if (muser != null)
+                {
+                    token = UsersFactoryHelpers.SetToken(muser.Id);
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, Constants.SessionCoockies.SessionUName, muser.UserName);
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, Constants.SessionCoockies.SessionULevel, muser.UserAccessLevel.ToString());
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, Constants.SessionCoockies.SessionUID, muser.Id.ToString());
+
+                    CoockiesHelper.SetCockie(HttpContext, Constants.SessionCoockies.CoockieToken, token);                    
+                }
+                else
+                {
+                    CoockiesHelper.DeleteCockie(HttpContext, Constants.SessionCoockies.CoockieToken);
+                }
+            }
             return View(null );
         }
         [HttpPost]

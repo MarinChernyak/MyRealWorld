@@ -1,9 +1,10 @@
 ﻿
 @{
     
-    Layout = "~/Views/Shared/_Layout2.cshtml";
+    Layout = "~/Views/Shared/_LayoutMain2.cshtml";
 }
-@* @model SMAuthentication.Models.Authentication.MyAccount *@
+@model SMAuthentication.Authentication.MyAccount 
+<link rel="stylesheet" href="~/css/LogIn.css" />
 
 
 @using (Html.BeginForm("MyAccount", "LogIn", FormMethod.Post))
@@ -11,79 +12,52 @@
     <section class="bg-dark ">
         <div class="container">
             <div class="col-md-10 form-group">
-                <label class="text-danger">@Model.ErrorMessage</label>
+                <label class="text-danger">@Model.ErrMessage</label>
             </div>
-           @*  <fieldset>
-                <legend class="text-warning ml-lg-4">My Account</legend>
-                <div class="col-md-3 form-group">
-
-                    @Html.LabelFor(x => x.UserName)
-                    @Html.EditorFor(x => x.UserName, new
-                    {
-                   htmlAttributes = new { @readonly = "readonly" }
-               })
+            <fieldset>
+                <legend class="legend ml-lg-4">My Account</legend>
+                <div class="mb-3">
+                    <label for="UserName" class="form-label labels_of_controls">User Name</label>
+                    <input asp-for="UserName" type="text" class="form-control midium_txt" id="txtUserjName" placeholder="UserName is required">
                 </div>
-                <div class="col-md-3 form-group">
-
-                    @Html.LabelFor(x => x.Role)
-                    @Html.EditorFor(x => x.Role, new
-                    {
-                   htmlAttributes = new { @readonly = "readonly" }
-               })
+                <div class="mb-3">
+                    <label for="Email" class="form-label labels_of_controls">Email</label>
+                    <input asp-for="Email" type="email" class="form-control midium_txt" id="txtEmail" placeholder="Email is required">
                 </div>
-                <div class="col-md-3 form-group">
-
-                    @Html.LabelFor(x => x.Password)
-                    @Html.EditorFor(x => x.Password)
-                    <div class="row ml-lg-1">
-                        @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
-                    </div>
+                <div class="mb-3">
+                    <label for="Role" class="form-label labels_of_controls">Role</label>
+                    <input asp-for="Role" type="text" class="form-control midium_txt" id="txtRole" readonly="readonly">
                 </div>
-                <div class="col-md-3 form-group">
-                    @Html.LabelFor(x => x.Email)
-                    @Html.EditorFor(x => x.Email)
-                    <div class="row ml-lg-1">
-                        @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
-                    </div>
+                <div class="mb-3">
+                    <label for="Password" class="form-label labels_of_controls">Password</label>
+                    <input asp-for="Password" type="password" class="form-control midium_txt" id="txtPass" >
                 </div>
-
-                <div class="col-md-3 form-group">
-                    @Html.LabelFor(x => x.FirstName)
-                    @Html.EditorFor(x => x.FirstName)
+                <div class="mb-3">
+                    <label for="ConfirmPassword" class="form-label labels_of_controls">Confirm password</label>
+                    <input asp-for="ConfirmPassword" type="password" class="form-control midium_txt" id="txtConfPass">
                 </div>
-                <div class="col-md-3 form-group">
-                    @Html.LabelFor(x => x.MidleName)
-                    @Html.PasswordFor(x => x.MidleName)
+                <div class="mb-3">
+                    <label for="FirstName" class="form-label labels_of_controls">First Name</label>
+                    <input asp-for="FirstName" type="text" class="form-control midium_txt" id="txtFirstName">
                 </div>
-                <div class="col-md-3 form-group">
-                    @Html.LabelFor(x => x.LastName)
-                    @Html.EditorFor(x => x.LastName)
+                <div class="mb-3">
+                    <label for="LastName" class="form-label labels_of_controls">Lastt Name</label>
+                    <input asp-for="LastName" type="text" class="form-control midium_txt" id="txtLastName">
                 </div>
-                <div class="col-md-2 form-group">
-                    @Html.LabelFor(x => x.Sex)
-                    @Html.DropDownListFor(x => x.Sex, Model.SexCollection, null, new { id = "cmbSex" })
+                <div class="mb-3">
+                    <label for="NumPoints" class="form-label labels_of_controls">Number of Points</label>
+                    <input asp-for="NumPoints" type="text" class="form-control midium_txt" id="txtNumPoints" readonly="readonly">
                 </div>
-                <div class="col-md-3 form-group">
-                    @Html.LabelFor(x => x.NumPoints)
-                    @Html.EditorFor(x => x.NumPoints, new
-                    {
-                        htmlAttributes = new { /*disabled = "disabled",*/ @readonly = "readonly" }
-                    })
+                <div class="mb-3">
+                    <label for="ActivationDate" class="form-label labels_of_controls">Date of activation</label>
+                    <input asp-for="ActivationDate" type="text" class="form-control midium_txt" id="txtActDate" readonly="readonly">
                 </div>
-                <div class="col-md-3 form-group">
-                    <label asp-for="@Model.Dob"><span class="field-name">Date of Birth (Optional)</span></label>
-                    <input asp-for="@Model.Dob" type="date" data-rule-dateiso="true" class="form-control"/>
-                </div>
-                @await Html.PartialAsync("~/Views/UserControls/_EventPlaceView.cshtml", Model.EventPlaceModel)
-
-
-
+                <input asp-for="IsActive" type="hidden" id="hdActive" />
                 <div class="col-md-3 form-group align-items-center mt-lg-3">
                     <button type="submit" class="btn btn-outline-warning">Update</button>
                 </div>
-            </fieldset> *@
-
+            </fieldset>            
         </div>
     </section>
-   @*  @Html.HiddenFor(x=>x.Id) *@
+    @Html.HiddenFor(x=>x.Id)
 }

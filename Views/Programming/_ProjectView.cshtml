@@ -35,21 +35,64 @@
             @if (!string.IsNullOrEmpty(Model.ProjectUrl))
             {
                 <div class="icon_menu first" title="take a look...">
-                    <a href="@Model.getProjectUrl()" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    <a href="@Model.getProjectUrl()" target="_blank">
+                        @if(Model.IsOnline)
+                        {
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        }
+                        else
+                        {
+                            <span class="offline_labels">See</span>
+                          
+                        }
+                    </a>
                 </div>
             }
             <div class="icon_menu first" title="see code...">
-                <a href="@Model.getCodeUrl()" target="_blank"><i class="fa-solid fa-code"></i></a>
+                <a href="@Model.getCodeUrl()" target="_blank">
+                    @if(Model.IsOnline)
+                        {
+                    <i class="fa-solid fa-code"></i>
+                        }
+                    else
+                    {
+                        <span class="offline_labels">Code</span>                        
+                    }
+                </a>
             </div>
             <div class="icon_menu" title="edit...">
-                @Html.ActionLink(" ", "EditProject", "Projects", new { projId = Model.Id }, new { @class = "fa-solid fa-pen" })               
+                 @if(Model.IsOnline)
+                 {
+                    @Html.ActionLink(" ", "EditProject", "Projects", new { projId = Model.Id }, new { @class = "fa-solid fa-pen" })
+                }
+                else
+                {
+                    @Html.ActionLink("Edit", "EditProject", "Projects", new { projId = Model.Id }, new { @class = "offline_labels" })
+                }
             </div>
             <div class="icon_menu" title="details...">
-                <span data-target="#myModal" data-toggle="modal" onclick="ShowDialog();"><i class=" fa-solid fa-circle-info"></i></span>
+                <span data-target="#myModal" data-toggle="modal" onclick="ShowDialog();">
+                     @if(Model.IsOnline)
+                     {
+                        <i class=" fa-solid fa-circle-info"></i>
+                    }
+                    else
+                    {
+                        <span class="offline_labels">More...</span>
+                    }
+
+                </span>
                 
             </div>
-            <div class="icon_menu" title="delete...">                
-                @Html.ActionLink(" ", "DeleteProject", "Projects", new { projId = Model.Id }, new {onclick="return confirm('Are you sure?')", @class = "fa-solid fa-trash", @style="color:darkred;" })
+            <div class="icon_menu" title="delete..."> 
+                @if(Model.IsOnline)
+                {
+                    @Html.ActionLink(" ", "DeleteProject", "Projects", new { projId = Model.Id }, new {onclick="return confirm('Are you sure?')", @class = "fa-solid fa-trash", @style="color:darkred;" })
+                }
+                else
+                {
+                    @Html.ActionLink("Del", "DeleteProject", "Projects", new { projId = Model.Id }, new { onclick = "return confirm('Are you sure?')", @class = "offline_labels", @style = "color:darkred;" })
+                }
             </div>
             
         </div>

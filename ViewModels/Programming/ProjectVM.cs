@@ -1,10 +1,9 @@
 ﻿using MRW_DAL.MyWEntities;
-using MyRealWorld.Common;
-using System.ComponentModel;
+using MyRealWorld.Models;
 
 namespace MyRealWorld.ViewModels.Programming
 {
-    public class ProjectVM
+    public class ProjectVM:BaseModel
     {
         public int Id { get; set; }
         public string ProjectName { get; set; }
@@ -24,10 +23,11 @@ namespace MyRealWorld.ViewModels.Programming
             Id = id;
             GetProject();
             GetCollections();
+            IsOnline=getIsOnline();
         }
         public ProjectVM()
         {
-
+            IsOnline = getIsOnline();
         }
         protected void GetProject()
         {

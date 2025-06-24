@@ -1,14 +1,16 @@
-﻿using Authentication.Main;
+﻿using Authentication.Factories;
+using Authentication.Main;
 using Authentication.Models;
+using MyRealWorld.Common;
+using MyRealWorld.Helpers;
+using NuGet.Common;
 using SMAuthentication.Authentication;
+using SMAuthentication.Factories;
+using SMUtilities;
 using System.ComponentModel;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
-using SMUtilities;
-using Authentication.Factories;
-using MyRealWorld.Common;
-using SMAuthentication.Factories;
 
 namespace MyRealWorld.Models.Authentication
 {
@@ -37,24 +39,37 @@ namespace MyRealWorld.Models.Authentication
                 }
             }
         }
-        public int TryLogIn()
+        public StrResponse TryLogIn()
         {     
             int err = 0;
             Authenticator auth = new Authenticator(UserName, Password, Common.Constants.Values.ApplicationId);
             StrResponse response =  auth.Authenticate();
+            string sid = response.GetValueByName("id");
+            if(!string.IsNullOrEmpty(sid))
+            {
+                Id = Convert.ToInt32(sid);
+            }
             if (response.ErrCode == SMAuthentication.Constants.ErrorsCodes.ErrorResetPasswordRequired)
             {
                 err = response.ErrCode;
-
-                if (!EmailNewPassword(response.ResponseValue))
+                string email = response.GetValueByName("Email");
+                if (!string.IsNullOrEmpty(email) && !EmailNewPassword(email))
                 {
-
-                    err = Common.Constants.ErrorCodes.Error_SMTP_Problem;
+                    err = Constants.ErrorCodes.Error_SMTP_Problem;
                     auth.DeleteSecurityProtocol(UserName);
-                }
-
+                    response.ClearValues();                }
             }
-            return err;
+            else if(response.ErrCode == SMAuthentication.Constants.ErrorsCodes.NoError)
+            {
+                string token = response.GetValueByName("token");
+                if(string.IsNullOrEmpty(token) && ShouldRemember )
+                {
+                    token = UsersFactoryHelpers.SetToken(Id);
+                    response.AddValue("token", token);
+                }
+            }
+
+                return response;
 
         }
         protected bool EmailNewPassword(string new_pass)
@@ -62,10 +77,10 @@ namespace MyRealWorld.Models.Authentication
             bool bIsOK = false;
             if (string.IsNullOrEmpty(Email))
             {
-                StrResponse strr = SMAuthentication.Factories.UsersFactoryHelpers.GetUserEmail(UserName);
+                StrResponse strr = UsersFactoryHelpers.GetUserEmail(UserName);
                 if (strr!=null && strr.ErrCode== SMAuthentication.Constants.ErrorsCodes.NoError)
                 {
-                    Email = strr.ResponseValue;
+                    Email = strr.GetValueByName("email");
                 }
             }
             if (!string.IsNullOrEmpty(new_pass) && !string.IsNullOrEmpty(Email))//new password
@@ -119,7 +134,8 @@ namespace MyRealWorld.Models.Authentication
             {
                 Authenticator auth = new Authenticator(UserName, Password, Common.Constants.Values.ApplicationId);
                 StrResponse response = auth.ResetPassword();
-                bIsOK = EmailNewPassword(response.ResponseValue);
+                string pass = response.GetValueByName("password");
+                bIsOK = EmailNewPassword(pass);
             }            
             return bIsOK;
         }
