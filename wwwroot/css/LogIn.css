@@ -67,9 +67,8 @@ legend {
 .ErrMsg {
     font-family: 'Segoe UI';
     color: #ff6a00;
-    font-size: 35px;
+    font-size: 15px;
     font-weight: bolder;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-bottom: 5px;
 }
 
