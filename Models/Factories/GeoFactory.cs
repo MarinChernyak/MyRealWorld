@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using MyRealWorld.Models.Utilities;
-using System.Reflection;
-
-namespace MyRealWorld.Models.Factories
+﻿namespace MyRealWorld.Models.Factories
 {
     public class GeoFactory :BaseFactory
     {

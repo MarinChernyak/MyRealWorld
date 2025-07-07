@@ -16,6 +16,9 @@ namespace MyRealWorld.Controllers.Authentication
 {
     public class LogInController : BaseController
     {
+        public LogInController(IConfiguration configuration) : base(configuration)
+        {
+        }
 
         public IActionResult ReLogIn()
         {

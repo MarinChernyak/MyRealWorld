@@ -7,8 +7,8 @@
 <script>
     setInterval(function(){
     var sline = $("#"+"@Model.Id").html();
-    if(sline.length>42)
-         console.log("Length Exided!");
+    //if(sline.length>42)
+     //    console.log("Length Exided!");
       $.ajax({
       url: '@Url.Action("UpdateLine", "Home")',
       method: "POST", 

@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using MyRealWorld.Common;
 using MyRealWorld.Models;
-using MyRealWorld.Models.Utilities;
+using SMCommonUtilities;
 using System.Reflection;
-using SMUtilities;
 
 namespace MyRealWorld.ViewModels
 {

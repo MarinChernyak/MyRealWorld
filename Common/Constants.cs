@@ -52,9 +52,6 @@ namespace MyRealWorld.Common
             public const string ZeroStringComboValue = "-1";
             protected static int _counter = 0;
             public static int Counter { get { return _counter++; } }
-            public static string MarkerEdit { get { return "[EDIT]"; } }            
-            public static string MarkerDelete { get { return "[DELETE]"; } }
-            public static string MarkerDeactivate { get { return "[DEACTIVATE]"; } }
         }
         public class Paths
         {

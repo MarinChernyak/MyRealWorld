@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using MRW_DAL.MyWEntities;
 using MyRealWorld.Models.Authentication;
+using SMGeneralEntities;
 
 
 
@@ -9,6 +11,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+var conString = builder.Configuration.GetConnectionString("SMGeneral") ??
+     throw new InvalidOperationException("Connection string 'SMGeneral'" +
+    " not found.");
+builder.Services.AddDbContext<SMGeneralContext>(options =>
+    options.UseSqlServer(conString));
+conString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+     throw new InvalidOperationException("Connection string 'DefaultConnection'" +
+    " not found.");
+builder.Services.AddDbContext<MRWContext>(options =>
+    options.UseSqlServer(conString));
+
 
 var app = builder.Build();
 app.UseSession();

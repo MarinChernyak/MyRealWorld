@@ -18,6 +18,11 @@ namespace MyRealWorld.Controllers
 {
     public class BaseController : Controller
     {
+        protected IConfiguration _configuration;
+        public BaseController(IConfiguration configuration) 
+        {
+            _configuration = configuration;
+        }
         protected void UpdateUserData(ViewModelBase model)
         {
             string userid = SessionHelper.GetObjectFromJson(HttpContext.Session, Constants.SessionCoockies.SessionUID);

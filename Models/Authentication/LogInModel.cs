@@ -1,12 +1,8 @@
-﻿using Authentication.Factories;
-using Authentication.Main;
+﻿using Authentication.Main;
 using Authentication.Models;
 using MyRealWorld.Common;
-using MyRealWorld.Helpers;
-using NuGet.Common;
-using SMAuthentication.Authentication;
 using SMAuthentication.Factories;
-using SMUtilities;
+using SMCommonUtilities;
 using System.ComponentModel;
 using System.Net;
 using System.Net.Mail;

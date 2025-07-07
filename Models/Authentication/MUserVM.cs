@@ -1,13 +1,13 @@
-﻿using Authentication.Models;
+﻿using Authentication.Factories;
+using Authentication.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MyRealWorld.Common;
-using SMAuthentication.Authentication;
+using SMCommonUtilities;
 using SMGeneralEntities;
+using SMUtilities;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
-using SMUtilities;
-using Authentication.Factories;
 
 namespace MyRealWorld.ModelsAuthentication
 {

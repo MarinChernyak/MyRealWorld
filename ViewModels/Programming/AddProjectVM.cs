@@ -1,7 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using MRW_DAL.MyWEntities;
 using MyRealWorld.Common;
-using SMUtilities;
+using SMCommonUtilities;
 using Project = MRW_DAL.MyWEntities.Project;
 
 namespace MyRealWorld.ViewModels.Programming

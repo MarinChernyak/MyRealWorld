@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using MyRealWorld.Common;
-using MyRealWorld.Models.Utilities;
-using SMUtilities;
+using SMCommonUtilities;
 using System.Reflection;
 
 namespace MyRealWorld.Models.Factories

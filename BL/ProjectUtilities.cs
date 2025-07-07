@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MRW_DAL.MyWEntities;
-using MyRealWorld.Models;
 using MyRealWorld.Models.DataWorking;
-using SMUtilities;
+using SMCommonUtilities;
 
 namespace MyRealWorld.BL
 {
