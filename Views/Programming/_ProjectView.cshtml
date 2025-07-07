@@ -1,8 +1,15 @@
 ﻿
 @using MyRealWorld.ViewModels.Programming
+@using MyRealWorld.Common
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
 @model ProjectVM
 <link rel="stylesheet" href="~/css/ProjectView.css" />
-
+@{
+    var user_level = HttpContextAccessor.HttpContext.Session.GetString(Constants.SessionCoockies.SessionULevel);
+    var iLevel = Convert.ToInt32(user_level);
+}
 <div class="container ProjectView">
     <div class="row">
        
@@ -61,13 +68,16 @@
                 </a>
             </div>
             <div class="icon_menu" title="edit...">
-                 @if(Model.IsOnline)
-                 {
-                    @Html.ActionLink(" ", "EditProject", "Projects", new { projId = Model.Id }, new { @class = "fa-solid fa-pen" })
-                }
-                else
+                @if (iLevel == Constants.Values.ADMIN_RIGHTS)
                 {
-                    @Html.ActionLink("Edit", "EditProject", "Projects", new { projId = Model.Id }, new { @class = "offline_labels" })
+                     if(Model.IsOnline)
+                     {
+                        @Html.ActionLink(" ", "EditProject", "Projects", new { projId = Model.Id }, new { @class = "fa-solid fa-pen" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Edit", "EditProject", "Projects", new { projId = Model.Id }, new { @class = "offline_labels" })
+                    }
                 }
             </div>
             <div class="icon_menu" title="details...">
@@ -84,14 +94,17 @@
                 </span>
                 
             </div>
-            <div class="icon_menu" title="delete..."> 
-                @if(Model.IsOnline)
+            <div class="icon_menu" title="delete...">
+                @if (iLevel == Constants.Values.ADMIN_RIGHTS)
                 {
-                    @Html.ActionLink(" ", "DeleteProject", "Projects", new { projId = Model.Id }, new {onclick="return confirm('Are you sure?')", @class = "fa-solid fa-trash", @style="color:darkred;" })
-                }
-                else
-                {
-                    @Html.ActionLink("Del", "DeleteProject", "Projects", new { projId = Model.Id }, new { onclick = "return confirm('Are you sure?')", @class = "offline_labels", @style = "color:darkred;" })
+                    if(Model.IsOnline)
+                    {
+                        @Html.ActionLink(" ", "DeleteProject", "Projects", new { projId = Model.Id }, new {onclick="return confirm('Are you sure?')", @class = "fa-solid fa-trash", @style="color:darkred;" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Del", "DeleteProject", "Projects", new { projId = Model.Id }, new { onclick = "return confirm('Are you sure?')", @class = "offline_labels", @style = "color:darkred;" })
+                    }
                 }
             </div>
             

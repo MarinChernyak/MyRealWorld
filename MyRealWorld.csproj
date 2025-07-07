@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Compile Remove="Models\Authentication\GmailOptions.cs" />
+    <Compile Remove="Models\Factories\CommonFunctionsFactory.cs" />
     <Compile Remove="Models\Geo\EventPlaceModel.cs" />
     <Compile Remove="Models\Person.cs" />
   </ItemGroup>

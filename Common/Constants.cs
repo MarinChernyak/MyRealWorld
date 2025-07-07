@@ -43,10 +43,9 @@ namespace MyRealWorld.Common
             public const int CAN_DEACTIVATE = 8;
             public const int CAN_DELETE = 16;
 
-            public const int VOLUNTIER_RIGHTS = 1;
-            public const int RESEARCHER_RIGHTS = 2;
-            public const int TEAMLEAD_RIGHTS = 3;
-            public const int ADMIN_RIGHTS = 4;
+            public const int GUEST_RIGHTS = 0;
+            public const int FRIEND_RIGHTS = 1;
+            public const int ADMIN_RIGHTS = 100;
             public static DateTime DummyDate { get { return new DateTime(1800, 1, 1); } }
             public const string ZeroStringComboText = "Select...";
             public const string ZeroStringComboValue = "-1";
