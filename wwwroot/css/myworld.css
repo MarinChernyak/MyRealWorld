@@ -1,4 +1,14 @@
-﻿body {
+﻿@font-face {
+    font-family: 'Segoe Script';
+    src: url('../fonts/SEGOESC.TTF'); /* IE9 Compat Modes */
+    src: url('../fonts/SEGOESCB.TTF')
+}
+@font-face {
+    font-family: 'Segoe Print';
+    src: url('../fonts/SEGOEPR.TTF'); /* IE9 Compat Modes */
+    src: url('../fonts/SEGOEPRB.TTF')
+}
+body {
     background-color: #0a1a03;
 }
 .Main {
@@ -50,10 +60,10 @@ a{
     z-index: 99999 !important;
     position: absolute;
     position: fixed;
-    left: 50vw;
+    left: 48vw;
     top: 38vh;
     transform: translate(-50%, -50%);
-    max-width: 50vw;
+    max-width: 40vw;
     max-height: 50vh;
 }
 
