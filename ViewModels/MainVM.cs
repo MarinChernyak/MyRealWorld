@@ -20,7 +20,7 @@ namespace MyRealWorld.ViewModels
         }
         protected void UpdateCollection()
         {
-            int numlines = (int)(Rectangle.Width * 0.92 / 28);
+            int numlines = (int)(Rectangle.Width / 22);
             for (int i = 0; i< numlines; ++i)
             {
                 VertLines.Add( new VertLineVM());

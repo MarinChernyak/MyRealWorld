@@ -8,9 +8,9 @@
 
 <div style="z-index:1;">
     <div class="photo-wrap">
-        <img src="/images/avatar4.png" alt="Me" style="width:100%;height=100%" >
+        <img src="/images/avatar4.png" alt="Me">
     </div>
-    <div class="linescontainer" style="z-index:2;">
+    <section class="linescontainer">
     @{
         if (Model != null)
         {
@@ -21,6 +21,19 @@
             }
         }
     }
-    </div>
+    </section>
 </div>
 
+<script>
+    window.onresize = UpdateWindowData;
+    function UpdateWindowData()
+    {
+        //$(window).width();$(window).height();document.documentElement.clientWidth ;document.documentElement.clientHeight;// ||
+         var width =   $(window).width();
+         var height =   $(window).height();
+       //alert(width+", "+height);
+        //You can also send this data to the server if needed
+        $.post('/Home/Reload', { width: width, height: height });
+        
+    }
+</script>

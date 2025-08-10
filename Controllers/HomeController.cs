@@ -32,20 +32,20 @@ namespace MyRealWorld.Controllers
                     SessionHelper.SetObjectAsJson(HttpContext.Session, Constants.SessionCoockies.SessionULevel, muser.UserAccessLevel.ToString());
                     SessionHelper.SetObjectAsJson(HttpContext.Session, Constants.SessionCoockies.SessionUID, muser.Id.ToString());
 
-                    CoockiesHelper.SetCockie(HttpContext, Constants.SessionCoockies.CoockieToken, token);                    
+                    CoockiesHelper.SetCockie(HttpContext, Constants.SessionCoockies.CoockieToken, token);
                 }
                 else
                 {
                     CoockiesHelper.DeleteCockie(HttpContext, Constants.SessionCoockies.CoockieToken);
                 }
             }
-            return View(null );
+            return View(null);
         }
         [HttpPost]
         public IActionResult IndexNext(string clientScreenWidth, string clientScreenHeight)
         {
             MainVM vm = new MainVM(Convert.ToInt32(clientScreenWidth), Convert.ToInt32(clientScreenHeight));
-            return View("~/Views/Home/IndexNextView.cshtml",vm);
+            return View("~/Views/Home/IndexNextView.cshtml", vm);
         }
 
         public IActionResult Privacy()
@@ -70,6 +70,11 @@ namespace MyRealWorld.Controllers
             ProgrammingVM model = new ProgrammingVM();
             return View("~/Views/Programming/ProgrammingView.cshtml", model);
         }
-
+        [HttpPost]
+        public IActionResult Reload(int width, int height)
+        {
+            MainVM vm = new MainVM(Convert.ToInt32(width), Convert.ToInt32(height));
+            return View("~/Views/Home/IndexNextView.cshtml", vm);
+        }
     }
 }
