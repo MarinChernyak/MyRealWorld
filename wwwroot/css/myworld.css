@@ -72,45 +72,9 @@ a{
         margin-left: auto;
         margin-right: auto;
     }
-
-/* Extra small devices (phones, 600px and down) */
-/*@media only screen and (max-width: 600px) {
-    .photo-wrap img {
-        max-width: 40%;
-        max-height: 40%;
-    }
-}*/
-
-/* Medium devices (landscape tablets, 768px and up) */
-/*@media only screen and (min-width: 768px) {
-    .photo-wrap img {
-        max-width: 50%;
-        max-height: 50%;
-    }
-}*/
-
-/* Large devices (laptops/desktops, 992px and up) */
-/*@media only screen and (min-width: 992px) {
-    .photo-wrap img {
-        max-width: 60%;
-        max-height: 60%;
-       
-    }
-}*/
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-/*@media only screen and (min-width: 1200px) {
-    .photo-wrap img {
-        max-width: 70%;
-        max-height: 70%;
-        
-    }
-}*/
-
 .welcome_label{
     font-family:'Segoe Script';
     color:lightgoldenrodyellow;
-    font-size:45px;
     font-weight:bold;
 }
 .menu_labels{
@@ -126,4 +90,49 @@ a{
     margin-right: 20px;
     margin-top: 20px;
     text-decoration:none;
+}
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (min-width: 500px) {
+    .welcome_label {
+        font-size: 1.1em;
+        /*background-color: blueviolet;*/
+    }
+}
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (min-width: 620px) {
+    .welcome_label {
+        font-size: 1.2em;
+        /*background-color: blue;*/
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .welcome_label {
+        font-size: 1.3em;
+        /*background-color:greenyellow;*/
+    }
+}
+/*
+ Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .welcome_label {
+        font-size: 1.4em;
+        /*background-color:darkmagenta;*/
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .welcome_label {
+        font-size: 1.5em;
+        /*background-color:brown;*/
+    }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1600px) {
+    .welcome_label {
+        font-size: 1.8em;
+        /*background-color: coral;*/
+    }
 }
