@@ -16,38 +16,31 @@
     @{
         var user_name = HttpContextAccessor.HttpContext.Session.GetString(Constants.SessionCoockies.SessionUName);
     }
-    <header >
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow mb-3">
-            <div class="container-fluid bg-dark">
-                <div class="col-9">
-                    <a class="navbar-brand welcome_label" asp-area="" asp-controller="Home" asp-action="Index"><span class="welcome_label">Programming world...</span></a>
-                </div>
-                <div class="col-3">
-                    <div class="navbar-collapse collapse " >
-                    <ul class="navbar-nav flex-grow-1" >
-                        <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Programming"><span class="menu_labels">Projects...</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Blog"><span class="menu_labels">Blog...</span></a>
-                        </li>
-                            <li class="nav-item">
-                                @if (string.IsNullOrEmpty(user_name))
-                                {
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="LogIn" asp-action="LogIn"><span class="menu_labels">Login</span></a>
-                                }
-                                else
-                                {
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="LogIn" asp-action="LogOut"><span class="menu_labels_grey">Logout</span></a>
-                                }
-                            </li>
-                    </ul>
-                </div>
-                </div>
-
-            </div>
-        </nav>
+    <header >       
+        <div class="container-fluid bg-dark">
+            <span class="welcome_item">
+                <a class="welcome_label" asp-area="" asp-controller="Home" asp-action="Index"><span class="welcome_label">Programming world...</span></a>
+            </span>
+              
+             <span class="menu-item">
+                    <a class="text-dark" asp-area="" asp-controller="Home" asp-action="Programming"><span class="menu_labels">Projects...</span></a>
+            </span>
+            <span class="menu-item">
+                <a class="text-dark" asp-area="" asp-controller="Home" asp-action="Blog"><span class="menu_labels">Blog...</span></a>
+            </span>
+            <span class="menu-item">
+                    @if (string.IsNullOrEmpty(user_name))
+                    {
+                        <a class="text-dark" asp-area="" asp-controller="LogIn" asp-action="LogIn"><span class="menu_labels">Login</span></a>
+                    }
+                    else
+                    {
+                        <a class="text-dark" asp-area="" asp-controller="LogIn" asp-action="LogOut"><span class="menu_labels_grey">Logout</span></a>
+                    }
+            </span>                    
+        </div>        
     </header>
+
     <div class="Main" style="width:100%;">
         <main role="main">
             @RenderBody()
