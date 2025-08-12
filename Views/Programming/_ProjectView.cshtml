@@ -10,109 +10,106 @@
     var user_level = HttpContextAccessor.HttpContext.Session.GetString(Constants.SessionCoockies.SessionULevel);
     var iLevel = Convert.ToInt32(user_level);
 }
-<div class="container ProjectView">
-    <div class="row">
-       
-        <div class="img_room">
-            <div class="row">
-                <img src='~/images/ProjectsImages/@Model.GetImgSrc()' width="200" height="200" />
-            </div>
-            <div class="row">
-                <div class="col-md-5 img_label">year: @Model.YearPublished</div><div class="col-md-6 img_label">last version: @Model.ProjectVersion</div>
-            </div>
-        </div>
+<div class="ProjectView">        
+      
+    <figure class="img_room">
+        <img src='~/images/ProjectsImages/@Model.GetImgSrc()' />
+        <figcaption class="img_label">
+            <div class="figcaption_line"><b>Year</b>: @Model.YearPublished</div>
+            <div class="figcaption_line"><b>Last version:</b> @Model.ProjectVersion</div>
+        </figcaption>
+    </figure>
 
-        <div class="main_part_room">
-            <div class="descriptio_part">
-            <h3>
-                @Model.ProjectName
-            </h3>
-            <p>
-                @Model.GetDescription()
-            </p>
-            </div>
-            <div class="key_words_part">
-                <div class="row">
-                    <div class="col-2"style="color:moccasin;"><b>KeyWords: </b></div>
-                    <div class="col-10"> @Model.KeyWords</div>
-                </div>
-            </div>
+    <div class="main_part_room">
+        <div class="descriptio_part">
+        <h3>
+            @Model.ProjectName
+        </h3>
+        <p>
+            @Model.GetDescription()
+        </p>
         </div>
-        <div class="buttons_area" >
-            @if (!string.IsNullOrEmpty(Model.ProjectUrl))
-            {
-                <div class="icon_menu first" title="take a look...">
-                    <a href="@Model.getProjectUrl()" target="_blank">
-                        @if(Model.IsOnline)
-                        {
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                        }
-                        else
-                        {
-                            <span class="offline_labels">See</span>
-                          
-                        }
-                    </a>
-                </div>
-            }
-            <div class="icon_menu first" title="see code...">
-                <a href="@Model.getCodeUrl()" target="_blank">
+        <div class="key_words_part">
+            <div class="key_words_keyword">KeyWords:</div>
+            <div class="key_words_list"> @Model.KeyWords</div>
+        </div>
+    </div>
+
+    <div class="buttons_area" >
+        @if (!string.IsNullOrEmpty(Model.ProjectUrl))
+        {
+            <span class="icon_menu first" title="take a look...">
+                <a href="@Model.getProjectUrl()" target="_blank">
                     @if(Model.IsOnline)
-                        {
-                    <i class="fa-solid fa-code"></i>
-                        }
+                    {
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    }
                     else
                     {
-                        <span class="offline_labels">Code</span>                        
+                        <span class="offline_labels">See</span>
+                          
                     }
                 </a>
-            </div>
-            <div class="icon_menu" title="edit...">
-                @if (iLevel == Constants.Values.ADMIN_RIGHTS)
-                {
-                     if(Model.IsOnline)
-                     {
-                        @Html.ActionLink(" ", "EditProject", "Projects", new { projId = Model.Id }, new { @class = "fa-solid fa-pen" })
-                    }
-                    else
+            </span>
+        }
+        <span class="icon_menu first" title="see code...">
+            <a href="@Model.getCodeUrl()" target="_blank">
+                @if(Model.IsOnline)
                     {
-                        @Html.ActionLink("Edit", "EditProject", "Projects", new { projId = Model.Id }, new { @class = "offline_labels" })
+                <i class="fa-solid fa-code"></i>
                     }
+                else
+                {
+                    <span class="offline_labels">Code</span>                        
                 }
-            </div>
-            <div class="icon_menu" title="details...">
-                <span data-target="#myModal" data-toggle="modal" onclick="ShowDialog();">
-                     @if(Model.IsOnline)
-                     {
-                        <i class=" fa-solid fa-circle-info"></i>
-                    }
-                    else
-                    {
-                        <span class="offline_labels">More...</span>
-                    }
-
-                </span>
-                
-            </div>
-            <div class="icon_menu" title="delete...">
-                @if (iLevel == Constants.Values.ADMIN_RIGHTS)
-                {
+            </a>
+        </span>
+        <span class="icon_menu" title="edit...">
+            @if (iLevel == Constants.Values.ADMIN_RIGHTS)
+            {
                     if(Model.IsOnline)
                     {
-                        @Html.ActionLink(" ", "DeleteProject", "Projects", new { projId = Model.Id }, new {onclick="return confirm('Are you sure?')", @class = "fa-solid fa-trash", @style="color:darkred;" })
-                    }
-                    else
-                    {
-                        @Html.ActionLink("Del", "DeleteProject", "Projects", new { projId = Model.Id }, new { onclick = "return confirm('Are you sure?')", @class = "offline_labels", @style = "color:darkred;" })
-                    }
+                    @Html.ActionLink(" ", "EditProject", "Projects", new { projId = Model.Id }, new { @class = "fa-solid fa-pen" })
                 }
-            </div>
+                else
+                {
+                    @Html.ActionLink("Edit", "EditProject", "Projects", new { projId = Model.Id }, new { @class = "offline_labels" })
+                }
+            }
+        </span>
+        <span class="icon_menu" title="details...">
+            <span data-target="#myModal" data-toggle="modal" onclick="ShowDialog();">
+                    @if(Model.IsOnline)
+                    {
+                    <i class=" fa-solid fa-circle-info"></i>
+                }
+                else
+                {
+                    <span class="offline_labels">More...</span>
+                }
+
+            </span>
+                
+        </span>
+        <span class="icon_menu" title="delete...">
+            @if (iLevel == Constants.Values.ADMIN_RIGHTS)
+            {
+                if(Model.IsOnline)
+                {
+                    @Html.ActionLink(" ", "DeleteProject", "Projects", new { projId = Model.Id }, new {onclick="return confirm('Are you sure?')", @class = "fa-solid fa-trash", @style="color:darkred;" })
+                }
+                else
+                {
+                    @Html.ActionLink("Del", "DeleteProject", "Projects", new { projId = Model.Id }, new { onclick = "return confirm('Are you sure?')", @class = "offline_labels", @style = "color:darkred;" })
+                }
+            }
+        </span>
             
-        </div>
+    </div>
 
     </div>
 
-</div>
+
 
 
 
