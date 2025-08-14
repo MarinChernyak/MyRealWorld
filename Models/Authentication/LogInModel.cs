@@ -1,6 +1,7 @@
 ﻿using Authentication.Main;
 using Authentication.Models;
 using MyRealWorld.Common;
+using NuGet.Common;
 using SMAuthentication.Factories;
 using SMCommonUtilities;
 using System.ComponentModel;
@@ -38,17 +39,19 @@ namespace MyRealWorld.Models.Authentication
         public StrResponse TryLogIn()
         {     
             int err = 0;
-            Authenticator auth = new Authenticator(UserName, Password, Common.Constants.Values.ApplicationId);
+            Authenticator auth = new Authenticator(UserName, Password, Constants.Values.ApplicationId);
             StrResponse response =  auth.Authenticate();
-            string sid = response.GetValueByName("id");
-            if(!string.IsNullOrEmpty(sid))
+            string sid = response.GetValueByName(SMAuthentication.Constants.Values.UserId);
+            
+            if (!string.IsNullOrEmpty(sid))
             {
                 Id = Convert.ToInt32(sid);
+                response.AddValue(SMAuthentication.Constants.Values.UserId, sid);
             }
             if (response.ErrCode == SMAuthentication.Constants.ErrorsCodes.ErrorResetPasswordRequired)
             {
                 err = response.ErrCode;
-                string email = response.GetValueByName("Email");
+                string email = response.GetValueByName(SMAuthentication.Constants.Values.UserEmail);
                 if (!string.IsNullOrEmpty(email) && !EmailNewPassword(email))
                 {
                     err = Constants.ErrorCodes.Error_SMTP_Problem;
@@ -57,15 +60,17 @@ namespace MyRealWorld.Models.Authentication
             }
             else if(response.ErrCode == SMAuthentication.Constants.ErrorsCodes.NoError)
             {
-                string token = response.GetValueByName("token");
+                string token = response.GetValueByName(SMAuthentication.Constants.Values.UserToken);
                 if(string.IsNullOrEmpty(token) && ShouldRemember )
                 {
                     token = UsersFactoryHelpers.SetToken(Id);
-                    response.AddValue("token", token);
+                    response.AddValue(SMAuthentication.Constants.Values.UserToken, token);
                 }
+                string accessLevel = response.GetValueByName(SMAuthentication.Constants.Values.UserLevel);
+                response.AddValue(SMAuthentication.Constants.Values.UserLevel, accessLevel);
             }
 
-                return response;
+            return response;
 
         }
         protected bool EmailNewPassword(string new_pass)
@@ -76,7 +81,7 @@ namespace MyRealWorld.Models.Authentication
                 StrResponse strr = UsersFactoryHelpers.GetUserEmail(UserName);
                 if (strr!=null && strr.ErrCode== SMAuthentication.Constants.ErrorsCodes.NoError)
                 {
-                    Email = strr.GetValueByName("email");
+                    Email = strr.GetValueByName(SMAuthentication.Constants.Values.UserEmail);
                 }
             }
             if (!string.IsNullOrEmpty(new_pass) && !string.IsNullOrEmpty(Email))//new password
@@ -130,7 +135,7 @@ namespace MyRealWorld.Models.Authentication
             {
                 Authenticator auth = new Authenticator(UserName, Password, Common.Constants.Values.ApplicationId);
                 StrResponse response = auth.ResetPassword();
-                string pass = response.GetValueByName("password");
+                string pass = response.GetValueByName(SMAuthentication.Constants.Values.UserPassword);
                 bIsOK = EmailNewPassword(pass);
             }            
             return bIsOK;

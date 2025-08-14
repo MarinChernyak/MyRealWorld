@@ -57,7 +57,7 @@ namespace MyRealWorld.Controllers.Authentication
             string token = string.Empty;
             int err = SMAuthentication.Constants.ErrorsCodes.NoError;
             StrResponse sr = model.TryLogIn();
-            token = sr.GetValueByName("token");
+            token = sr.GetValueByName(SMAuthentication.Constants.Values.UserToken);
             err = sr.ErrCode;
             if (err== SMAuthentication.Constants.ErrorsCodes.ErrorInvalidPassword)
             {
@@ -74,8 +74,14 @@ namespace MyRealWorld.Controllers.Authentication
                 if (model.ShouldRemember && !string.IsNullOrEmpty(token))
                 {
                     CoockiesHelper.SetCockie(HttpContext, Constants.SessionCoockies.CoockieToken, token);
-                    SetSessionVariables(model);
                 }
+                string level = sr.GetValueByName(SMAuthentication.Constants.Values.UserLevel);
+                if (!string.IsNullOrEmpty(level))
+                {
+                    int il = Convert.ToInt32(level);
+                    model.UserAccessLevel = il;
+                }
+
                 SetSessionVariables(model);
                 return RedirectToAction("Index", "Home");
             }

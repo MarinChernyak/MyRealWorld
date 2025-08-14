@@ -51,6 +51,8 @@ namespace MyRealWorld.Common
             public const string ZeroStringComboValue = "-1";
             protected static int _counter = 0;
             public static int Counter { get { return _counter++; } }
+
+
         }
         public class Paths
         {
